@@ -1,0 +1,14 @@
+# Spira Archive Git Ignore
+
+# Raw downloads can optionally be ignored if using LFS or releases
+raw_downloads/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Environment
+venv/
+.env
