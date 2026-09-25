@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeff Spira Boat Plans Preservation Archive</title>
+    <style>
+    :root {
+        --primary: #0284c7;
+        --primary-dark: #0369a1;
+        --bg: #0f172a;
+        --card-bg: #1e293b;
+        --text: #f1f5f9;
+        --text-muted: #94a3b8;
+        --border: #334155;
+        --accent: #38bdf8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+    }
+    header {
+        background: #090d16;
+        border-bottom: 1px solid var(--border);
+        padding: 1.25rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .logo { font-size: 1.35rem; font-weight: 700; color: var(--accent); display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+    .hero {
+        text-align: center;
+        padding: 3rem 1rem;
+        background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+        border-radius: 12px;
+        margin-bottom: 2.5rem;
+        border: 1px solid var(--border);
+    }
+    .hero h1 { font-size: 2.5rem; margin-bottom: 0.75rem; color: #fff; }
+    .hero p { font-size: 1.15rem; color: var(--text-muted); max-width: 800px; margin: 0 auto; }
+    .search-box {
+        margin-top: 1.5rem;
+        display: flex;
+        justify-content: center;
+    }
+    .search-box input {
+        width: 100%;
+        max-width: 500px;
+        padding: 0.75rem 1.25rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: #090d16;
+        color: #fff;
+        font-size: 1rem;
+        outline: none;
+    }
+    .search-box input:focus { border-color: var(--accent); }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 1.5rem;
+        transition: transform 0.2s, border-color 0.2s;
+    }
+    .card:hover { transform: translateY(-3px); border-color: var(--accent); }
+    .card h3 { color: var(--accent); font-size: 1.25rem; margin-bottom: 0.5rem; }
+    .card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1rem; }
+    .specs-list { list-style: none; margin-bottom: 1rem; font-size: 0.9rem; }
+    .specs-list li { margin-bottom: 0.35rem; color: #cbd5e1; }
+    .specs-list strong { color: #fff; }
+    .badge {
+        display: inline-block;
+        padding: 0.25rem 0.5rem;
+        background: #0369a1;
+        color: #fff;
+        font-size: 0.75rem;
+        border-radius: 4px;
+        margin-bottom: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+    .btn {
+        display: inline-block;
+        background: var(--primary);
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 600;
+        transition: background 0.2s;
+    }
+    .btn:hover { background: var(--primary-dark); }
+    .section-title { font-size: 1.75rem; margin-bottom: 1rem; border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; }
+    footer { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.875rem; border-top: 1px solid var(--border); margin-top: 4rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo">⛵ Spira Boat Plans Archive</a>
+        <nav class="nav-links">
+            <a href="#models" class="active">Boat Models</a>
+            <a href="#reports">Technical Reports</a>
+            <a href="#manuals">Manuals & Guides</a>
+            <a href="https://github.com" target="_blank">GitHub</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Jeff Spira Boat Plans Archive</h1>
+            <p>An open digital preservation library honoring naval designer Jeff Spira. Containing 170+ study plans, construction manuals, engineering technical reports, and bills of materials for home boatbuilders.</p>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search by model name (e.g. Albion, Tillamook, Seneca, Rogue)..." onkeyup="filterCards()">
+            </div>
+        </div>
+
+        <h2 id="models" class="section-title">Design Catalog (32 Models)</h2>
+        <div class="grid" id="boatGrid"></div>
+
+        <h2 id="reports" class="section-title" style="margin-top: 3rem;">Engineering Technical Reports</h2>
+        <div class="grid">
+            <div class="card">
+                <div class="badge">BR-001</div>
+                <h3>Registering Your Homebuilt Boat</h3>
+                <p>Official legal and Coast Guard procedures for registering and obtaining Hull Identification Numbers (HIN).</p>
+            </div>
+            <div class="card">
+                <div class="badge">BR-002</div>
+                <h3>Outboard Power for Homebuilt Boats</h3>
+                <p>Horsepower calculation formulas, transom weight ratings, and fuel consumption considerations.</p>
+            </div>
+            <div class="card">
+                <div class="badge">BR-003</div>
+                <h3>Homebuilt Boat Seaworthiness</h3>
+                <p>Principles of dynamic stability, reserve buoyancy in surf, and cockpit self-bailing design.</p>
+            </div>
+            <div class="card">
+                <div class="badge">BR-004</div>
+                <h3>Scarfing Lumber for Boat Building</h3>
+                <p>Detailed guide on scarfing long dimensional timber framing and chine stringers (8:1 bevels).</p>
+            </div>
+            <div class="card">
+                <div class="badge">BR-005</div>
+                <h3>Steam Bending Framing</h3>
+                <p>Constructing steam boxes and bending hardwood frames without splitting or deformation.</p>
+            </div>
+            <div class="card">
+                <div class="badge">BR-006</div>
+                <h3>Scarfing Plywood Panels</h3>
+                <p>Step-by-step methods for scarfing 4x8 plywood sheets into continuous full-length boat sides and bottoms.</p>
+            </div>
+        </div>
+
+        <h2 id="manuals" class="section-title" style="margin-top: 3rem;">Building Manuals & Publications</h2>
+        <div class="grid">
+            <div class="card">
+                <div class="badge">Textbook</div>
+                <h3>Illustrated Guide to Ply-on-Frame Boatbuilding</h3>
+                <p>Spira's complete illustrated handbook detailing frame construction, lofting, epoxy fillets, and sheathing.</p>
+            </div>
+            <div class="card">
+                <div class="badge">Guide</div>
+                <h3>How to Build an Easy Homebuilt Sea Kayak</h3>
+                <p>A fast, accessible kayak construction guide for weekend woodworkers and first-time builders.</p>
+            </div>
+            <div class="card">
+                <div class="badge">Standard</div>
+                <h3>USCG Backyard Boatbuilder Safety Manual</h3>
+                <p>Federal flotation, ventilation, and load capacity safety guidelines.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Jeff Spira Boat Plans Preservation Project &bull; Educational, Non-Commercial Memorial Archive</p>
+    </footer>
+
+    <script>
+        const boats = [{"category": "Pacific Power Dories", "category_id": "pacific-power-dories", "name": "Seneca (15') - Pacific Power Dory", "folder": "15-seneca", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["SenecaMetricStudy.pdf", "SenecaStudy.pdf"]}, {"category": "Pacific Power Dories", "category_id": "pacific-power-dories", "name": "Courtenay Offshore (17') - Offshore Power Dory", "folder": "17-courtenay", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["CourtenayStudy.pdf"]}, {"category": "Pacific Power Dories", "category_id": "pacific-power-dories", "name": "Tillamook (17') - Pacific Power Dory", "folder": "17-tillamook", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["TillamookStudy.pdf"]}, {"category": "Pacific Power Dories", "category_id": "pacific-power-dories", "name": "Albion (19') - Pacific Power Dory", "folder": "19-albion", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["AlbionStudy.pdf", "AlbionMetricStudy.pdf"]}, {"category": "Pacific Power Dories", "category_id": "pacific-power-dories", "name": "Anacapa Offshore (19') - Offshore Power Dory", "folder": "19-anacapa", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["AnacapaMetricStudy.pdf", "AnacapaStudy.pdf"]}, {"category": "Pacific Power Dories", "category_id": "pacific-power-dories", "name": "Avila (20') - Pacific Power Dory", "folder": "20-avila", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["AvilaStudy.pdf"]}, {"category": "Pacific Power Dories", "category_id": "pacific-power-dories", "name": "Alamitos (21') - Pacific Power Dory", "folder": "21-alamitos", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["AlamitosStudy.pdf"]}, {"category": "Pacific Power Dories", "category_id": "pacific-power-dories", "name": "Farallon Offshore (23') - Offshore Power Dory", "folder": "23-farallon", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["FarallonStudy.pdf"]}, {"category": "Pacific Power Dories", "category_id": "pacific-power-dories", "name": "Winchester (23') - Pacific Power Dory", "folder": "23-winchester", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["WinchesterStudy.pdf"]}, {"category": "Pacific Power Dories", "category_id": "pacific-power-dories", "name": "Caladesi (25') - Pacific Power Dory", "folder": "25-caladesi", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["CaladesiBOM.pdf", "CaladesiStudy.pdf", "CaladesiMetricStudy.pdf"]}, {"category": "Pacific Power Dories", "category_id": "pacific-power-dories", "name": "Sitka (27') - Pacific Power Dory", "folder": "27-sitka", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["SitkaStudy.pdf", "SitkaMetricStudy.pdf"]}, {"category": "Pacific Power Dories", "category_id": "pacific-power-dories", "name": "Kodiak (32') - Pacific Power Dory", "folder": "32-kodiak", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["KodiakStudy.pdf"]}, {"category": "Carolina Dories", "category_id": "carolina-dories", "name": "Oysterman (16') - Carolina Dory", "folder": "16-oysterman", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["ordprt_calif_oyst.pdf", "OystStudy.pdf", "ordprt_world_oyst.pdf", "ordprt_usa_oyst.pdf", "OystermanMetricStudy.pdf", "OystermanStudy.pdf"]}, {"category": "Carolina Dories", "category_id": "carolina-dories", "name": "Carolinian (19') - Carolina Dory", "folder": "19-carolinian", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["ordprt_world_caro.pdf", "CarolinianBOM.pdf", "CaroStudy.pdf", "ordprt_calif_caro.pdf", "r_CaroConst.pdf", "CarolinianStudy.pdf", "CarolinianMetricStudy.pdf"]}, {"category": "Carolina Dories", "category_id": "carolina-dories", "name": "Hatteras (20') - Carolina Dory", "folder": "20-hatteras", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["HattStudy.pdf", "ordprt_world_hatt.pdf", "ordprt_usa_hatt.pdf", "ordprt_calif_hatt.pdf", "HatterasStudy.pdf"]}, {"category": "Carolina Dories", "category_id": "carolina-dories", "name": "Carolina Dory (22') - Carolina Dory", "folder": "22-carolina-dory", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": []}, {"category": "Drift Boats & River Dories", "category_id": "drift-boats-and-river", "name": "Rogue River (14') - Drift Boat", "folder": "14-rogue-river", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["RogueStudy.pdf"]}, {"category": "Drift Boats & River Dories", "category_id": "drift-boats-and-river", "name": "Mackenzie (16') - River Drift Boat", "folder": "16-mackenzie", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["ordprt_calif_mack.pdf", "MackinawStudy.pdf", "ordprt_usa_mack.pdf", "MackStudy.pdf", "ordprt_world_mack.pdf"]}, {"category": "Drift Boats & River Dories", "category_id": "drift-boats-and-river", "name": "Clackamas (17') - Drift Boat", "folder": "17-clackamas", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": []}, {"category": "Garveys, Skiffs & Utility Boats", "category_id": "garveys-skiffs-and-utility", "name": "Huntington Harbor (8') - Pram / Dinghy", "folder": "08-huntington-harbor", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["HuntingtonHarborBOM.pdf", "HuntingtonHarborMetricPlans.pdf"]}, {"category": "Garveys, Skiffs & Utility Boats", "category_id": "garveys-skiffs-and-utility", "name": "Newport Harbor (10') - Pram / Dinghy", "folder": "10-newport-harbor", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["NewporterStudy.pdf", "NewporterBOM.pdf"]}, {"category": "Garveys, Skiffs & Utility Boats", "category_id": "garveys-skiffs-and-utility", "name": "Channel Islands (12') - Skiff", "folder": "12-channel-islands", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": []}, {"category": "Garveys, Skiffs & Utility Boats", "category_id": "garveys-skiffs-and-utility", "name": "Mission Bay (14') - Garvey Skiff", "folder": "14-mission-bay", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["MissionBayMetricBOM.pdf", "MissStudy.pdf", "MiniMissStudy.pdf", "ordprt_world_miss.pdf", "MaxiMissStudy.pdf", "ordprt_calif_miss.pdf", "MiniMissBOM.pdf", "MissionBayBOM.pdf", "r_MissConst.pdf", "ordprt_usa_miss.pdf", "MissionBayMetricStudy.pdf"]}, {"category": "Garveys, Skiffs & Utility Boats", "category_id": "garveys-skiffs-and-utility", "name": "Back Bay (16') - Flats Skiff", "folder": "16-back-bay", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["r_BackConst.pdf", "BackBayStudy.pdf", "ordprt_world_back.pdf", "ordprt_calif_back.pdf", "BackStudy.pdf", "BackBayBOM.pdf", "ordprt_usa_back.pdf"]}, {"category": "Garveys, Skiffs & Utility Boats", "category_id": "garveys-skiffs-and-utility", "name": "San Clemente (16') - Garvey Skiff", "folder": "16-san-clemente", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["ClementeMetricStudy.pdf"]}, {"category": "Garveys, Skiffs & Utility Boats", "category_id": "garveys-skiffs-and-utility", "name": "San Diego (18') - Garvey Skiff", "folder": "18-san-diego", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": []}, {"category": "Garveys, Skiffs & Utility Boats", "category_id": "garveys-skiffs-and-utility", "name": "San Pedro (20') - Garvey Skiff", "folder": "20-san-pedro", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": []}, {"category": "Cruisers & Pocket Trawlers", "category_id": "cruisers-and-trawlers", "name": "Key Largo (20') - Pocket Cruiser", "folder": "20-key-largo", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["KeylStudy.pdf", "ordprt_world_keyl.pdf", "ordprt_usa_keyl.pdf", "KeyLargoMetricStudy.pdf", "KeyLargoStudy.pdf", "r_KeylConst.pdf", "ordprt_calif_keyl.pdf", "KeyLargoBOM.pdf"]}, {"category": "Cruisers & Pocket Trawlers", "category_id": "cruisers-and-trawlers", "name": "Chinook (21') - Pocket Trawler", "folder": "21-chinook", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["ordprt_usa_chin.pdf", "ordprt_calif_chin.pdf", "ChinookBOM.pdf", "ChinookMetricStudy.pdf", "ChinookStudy.pdf", "ChinStudy.pdf", "ordprt_world_chin.pdf"]}, {"category": "Cruisers & Pocket Trawlers", "category_id": "cruisers-and-trawlers", "name": "Gloucester (24') - Lobster Boat / Cruiser", "folder": "24-gloucester", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["GloustermanBOM.pdf", "ordprt_usa_glou.pdf", "r_GlouConst.pdf", "ordprt_calif_glou.pdf", "GloustermanStudy.pdf", "GlouStudy.pdf", "ordprt_world_glou.pdf"]}, {"category": "Cruisers & Pocket Trawlers", "category_id": "cruisers-and-trawlers", "name": "Kachemak (24') - Alaskan Cruiser", "folder": "24-kachemak", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["r_KachConst.pdf", "KachemakMetricStudy.pdf"]}, {"category": "Cruisers & Pocket Trawlers", "category_id": "cruisers-and-trawlers", "name": "Alaskan (26') - Cabin Cruiser / Workboat", "folder": "26-alaskan", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["r_AlasConst.pdf", "ordprt_calif_alas.pdf", "AlasStudy.pdf", "AlaskanMetricBOM.pdf", "CalaStudy.pdf", "AlaskanStudy.pdf", "AlaskanMetricStudy.pdf"]}];
+        const grid = document.getElementById('boatGrid');
+
+        function renderBoats(items) {
+            grid.innerHTML = items.map(b => `
+                <div class="card">
+                    <div class="badge">${b.category}</div>
+                    <h3>${b.name}</h3>
+                    <ul class="specs-list">
+                        <li><strong>LOA:</strong> ${b.loa}</li>
+                        <li><strong>Beam:</strong> ${b.beam}</li>
+                        <li><strong>Hull:</strong> ${b.hull}</li>
+                        <li><strong>Power:</strong> ${b.power}</li>
+                        <li><strong>Payload:</strong> ${b.payload}</li>
+                    </ul>
+                    <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">
+                        📁 ${b.files.length} plan/document file(s) cataloged
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterCards() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = boats.filter(b => 
+                b.name.toLowerCase().includes(query) || 
+                b.category.toLowerCase().includes(query) ||
+                b.hull.toLowerCase().includes(query)
+            );
+            renderBoats(filtered);
+        }
+
+        renderBoats(boats);
+    </script>
+</body>
+</html>

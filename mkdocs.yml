@@ -1,0 +1,43 @@
+site_name: Jeff Spira Boat Plans Archive
+site_description: Digital preservation archive and study plans for Jeff Spira's ply-on-frame boats and Pacific power dories.
+site_author: Preservation Archive Contributors
+repo_name: spira-boat-plans
+repo_url: https://github.com/
+
+theme:
+  name: material
+  palette:
+    - scheme: slate
+      primary: light blue
+      accent: cyan
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - Boat Collections:
+      - Pacific Power Dories: boats/pacific-power-dories.md
+      - Carolina Dories: boats/carolina-dories.md
+      - Drift Boats & River: boats/drift-boats.md
+      - Garveys & Skiffs: boats/garveys-skiffs.md
+      - Cruisers & Trawlers: boats/cruisers-trawlers.md
+  - Technical Reports: technical-reports.md
+  - Manuals & Guides: manuals.md
+  - Design Philosophy: philosophy.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - attr_list
+  - md_in_html
