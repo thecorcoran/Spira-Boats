@@ -4,225 +4,874 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jeff Spira Boat Plans Preservation Archive</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <style>
-    :root {
-        --primary: #0284c7;
-        --primary-dark: #0369a1;
-        --bg: #0f172a;
-        --card-bg: #1e293b;
-        --text: #f1f5f9;
-        --text-muted: #94a3b8;
-        --border: #334155;
-        --accent: #38bdf8;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        background: var(--bg);
-        color: var(--text);
-        line-height: 1.6;
-    }
-    header {
-        background: #090d16;
-        border-bottom: 1px solid var(--border);
-        padding: 1.25rem 2rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-    .logo { font-size: 1.35rem; font-weight: 700; color: var(--accent); display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
-    .nav-links { display: flex; gap: 1.5rem; }
-    .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: color 0.2s; }
-    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
-    .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-    .hero {
-        text-align: center;
-        padding: 3rem 1rem;
-        background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-        border-radius: 12px;
-        margin-bottom: 2.5rem;
-        border: 1px solid var(--border);
-    }
-    .hero h1 { font-size: 2.5rem; margin-bottom: 0.75rem; color: #fff; }
-    .hero p { font-size: 1.15rem; color: var(--text-muted); max-width: 800px; margin: 0 auto; }
-    .search-box {
-        margin-top: 1.5rem;
-        display: flex;
-        justify-content: center;
-    }
-    .search-box input {
-        width: 100%;
-        max-width: 500px;
-        padding: 0.75rem 1.25rem;
-        border-radius: 8px;
-        border: 1px solid var(--border);
-        background: #090d16;
-        color: #fff;
-        font-size: 1rem;
-        outline: none;
-    }
-    .search-box input:focus { border-color: var(--accent); }
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-        gap: 1.5rem;
-        margin-top: 1.5rem;
-    }
-    .card {
-        background: var(--card-bg);
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        padding: 1.5rem;
-        transition: transform 0.2s, border-color 0.2s;
-    }
-    .card:hover { transform: translateY(-3px); border-color: var(--accent); }
-    .card h3 { color: var(--accent); font-size: 1.25rem; margin-bottom: 0.5rem; }
-    .card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1rem; }
-    .specs-list { list-style: none; margin-bottom: 1rem; font-size: 0.9rem; }
-    .specs-list li { margin-bottom: 0.35rem; color: #cbd5e1; }
-    .specs-list strong { color: #fff; }
-    .badge {
-        display: inline-block;
-        padding: 0.25rem 0.5rem;
-        background: #0369a1;
-        color: #fff;
-        font-size: 0.75rem;
-        border-radius: 4px;
-        margin-bottom: 0.75rem;
-        font-weight: 600;
-        text-transform: uppercase;
-    }
-    .btn {
-        display: inline-block;
-        background: var(--primary);
-        color: #fff;
-        padding: 0.5rem 1rem;
-        border-radius: 6px;
-        text-decoration: none;
-        font-size: 0.875rem;
-        font-weight: 600;
-        transition: background 0.2s;
-    }
-    .btn:hover { background: var(--primary-dark); }
-    .section-title { font-size: 1.75rem; margin-bottom: 1rem; border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; }
-    footer { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.875rem; border-top: 1px solid var(--border); margin-top: 4rem; }
+        :root {
+            --bg: #090e17;
+            --surface: #111a2e;
+            --surface-hover: #16223b;
+            --surface-card: #0f172a;
+            --border: #1e2e4a;
+            --border-highlight: #38bdf8;
+            --primary: #0284c7;
+            --primary-glow: rgba(2, 132, 199, 0.25);
+            --accent: #38bdf8;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --tag-bg: #1e293b;
+            --tag-text: #38bdf8;
+            --success: #10b981;
+            --success-bg: rgba(16, 185, 129, 0.15);
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background: rgba(9, 14, 23, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 0.85rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.15rem;
+        }
+
+        .brand-icon {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.4rem 0.8rem;
+            border-radius: var(--radius-sm);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #fff;
+            background: var(--surface-hover);
+        }
+
+        .btn-github {
+            background: #1f2937;
+            color: #fff;
+            padding: 0.45rem 1rem;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .btn-github:hover {
+            background: #374151;
+            border-color: var(--accent);
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(180deg, rgba(2, 132, 199, 0.08) 0%, transparent 100%);
+            padding: 3rem 1.5rem 2rem 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            margin-bottom: 0.75rem;
+            background: linear-gradient(135deg, #ffffff 40%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            max-width: 820px;
+            margin: 0 auto 1.5rem auto;
+            line-height: 1.6;
+        }
+
+        /* Stats bar */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 0.5rem 1.25rem;
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-num {
+            font-weight: 700;
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Search & Filter Toolbar */
+        .toolbar {
+            max-width: 1280px;
+            margin: -1.25rem auto 1.5rem auto;
+            padding: 0 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            position: sticky;
+            top: 60px;
+            z-index: 90;
+        }
+
+        .search-container {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 0.6rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .search-icon {
+            color: var(--text-dim);
+            font-size: 1.25rem;
+        }
+
+        .search-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-dim);
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding: 0.25rem 0;
+            scrollbar-width: none;
+        }
+
+        .filter-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-btn {
+            background: var(--surface);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            padding: 0.45rem 0.9rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .tab-btn:hover {
+            background: var(--surface-hover);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 0 12px var(--primary-glow);
+        }
+
+        .tab-count {
+            background: rgba(0, 0, 0, 0.25);
+            padding: 0.1rem 0.4rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem 4rem 1.5rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 2rem 0 1.25rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-header h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 1.25rem;
+        }
+
+        /* Boat Card */
+        .boat-card {
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        .boat-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--border-highlight);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+        }
+
+        .card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 0.75rem;
+        }
+
+        .boat-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.3;
+        }
+
+        .badge-length {
+            background: var(--primary);
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.2rem 0.5rem;
+            border-radius: var(--radius-sm);
+            font-family: 'JetBrains Mono', monospace;
+            white-space: nowrap;
+        }
+
+        .badge-category {
+            display: inline-block;
+            background: var(--tag-bg);
+            color: var(--tag-text);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.2rem 0.5rem;
+            border-radius: var(--radius-sm);
+            width: fit-content;
+        }
+
+        .boat-desc {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            line-height: 1.5;
+            flex: 1;
+        }
+
+        .downloads-box {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .downloads-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .btn-dl {
+            background: var(--surface);
+            color: #fff;
+            border: 1px solid var(--border);
+            padding: 0.35rem 0.65rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: all 0.15s;
+        }
+
+        .btn-dl:hover {
+            background: var(--primary);
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        .btn-dl.primary-dl {
+            background: var(--primary);
+            border-color: var(--accent);
+        }
+
+        .btn-dl.primary-dl:hover {
+            background: var(--accent);
+            color: #000;
+        }
+
+        .btn-all-files {
+            background: transparent;
+            color: var(--text-dim);
+            border: 1px dashed var(--border);
+            padding: 0.35rem 0.65rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .btn-all-files:hover {
+            color: #fff;
+            border-color: var(--accent);
+            background: var(--surface-hover);
+        }
+
+        /* Reports & Manuals styling */
+        .doc-card {
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 0.75rem;
+            transition: all 0.2s;
+        }
+
+        .doc-card:hover {
+            border-color: var(--border-highlight);
+            transform: translateY(-2px);
+        }
+
+        .doc-code {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 0.85rem;
+        }
+
+        .doc-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .doc-desc {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        /* Modal */
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .modal-backdrop.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: var(--surface);
+            border: 1px solid var(--border-highlight);
+            border-radius: var(--radius-lg);
+            max-width: 600px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 1.75rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.75rem;
+        }
+
+        .modal-close {
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0 0.5rem;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: #fff;
+        }
+
+        .modal-file-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .modal-file-item {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 0.6rem 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.875rem;
+        }
+
+        /* Empty state */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem 1rem;
+            color: var(--text-dim);
+        }
+
+        footer {
+            background: #060910;
+            border-top: 1px solid var(--border);
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.875rem;
+            margin-top: auto;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
     <header>
-        <a href="#" class="logo">⛵ Spira Boat Plans Archive</a>
+        <a href="#" class="brand">
+            <span class="brand-icon">⛵</span>
+            <span>Spira Boat Plans Archive</span>
+        </a>
         <nav class="nav-links">
-            <a href="#models" class="active">Boat Models</a>
-            <a href="#reports">Technical Reports</a>
-            <a href="#manuals">Manuals & Guides</a>
-            <a href="https://github.com" target="_blank">GitHub</a>
+            <a class="nav-link active" onclick="switchTab('all')">Boat Models</a>
+            <a class="nav-link" onclick="switchTab('reports')">Technical Reports</a>
+            <a class="nav-link" onclick="switchTab('manuals')">Manuals & Books</a>
+            <a href="https://github.com/thecorcoran/Spira-Boats" target="_blank" class="btn-github">
+                <span>⭐ GitHub Repo</span>
+            </a>
         </nav>
     </header>
 
-    <div class="container">
-        <div class="hero">
-            <h1>Jeff Spira Boat Plans Archive</h1>
-            <p>An open digital preservation library honoring naval designer Jeff Spira. Containing 170+ study plans, construction manuals, engineering technical reports, and bills of materials for home boatbuilders.</p>
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Search by model name (e.g. Albion, Tillamook, Seneca, Rogue)..." onkeyup="filterCards()">
+    <section class="hero">
+        <h1>Jeff Spira Boat Plans Digital Preservation Archive</h1>
+        <p>An open, searchable preservation library honoring the naval designs of Jeff Spira. Built to make over 170+ study plans, engineering reports, and construction guides easily accessible to builders worldwide.</p>
+        
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span>⛵ Models:</span>
+                <span class="stat-num">88</span>
+            </div>
+            <div class="stat-item">
+                <span>📐 Technical Bulletins:</span>
+                <span class="stat-num">16</span>
+            </div>
+            <div class="stat-item">
+                <span>📖 Books & Guides:</span>
+                <span class="stat-num">34</span>
+            </div>
+            <div class="stat-item">
+                <span>🔨 Construction:</span>
+                <span class="stat-num">Ply-on-Frame</span>
             </div>
         </div>
+    </section>
 
-        <h2 id="models" class="section-title">Design Catalog (32 Models)</h2>
-        <div class="grid" id="boatGrid"></div>
+    <div class="toolbar">
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" class="search-input" placeholder="Search by boat name, length, or category (e.g., Tillamook, 19', Albion, Carolina, Rogue)..." oninput="applyFilters()">
+        </div>
+        
+        <div class="filter-tabs">
+            <button class="tab-btn active" onclick="switchTab('all')" data-cat="all">
+                <span>🌟 All Models</span>
+                <span class="tab-count">88</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab('pacific-power-dories')" data-cat="pacific-power-dories">
+                <span>🌊 Pacific Dories</span>
+                <span class="tab-count">27</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab('carolina-dories')" data-cat="carolina-dories">
+                <span>🛶 Carolina Dories</span>
+                <span class="tab-count">8</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab('drift-boats-and-river')" data-cat="drift-boats-and-river">
+                <span>🎣 Drift & River</span>
+                <span class="tab-count">6</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab('garveys-skiffs-and-utility')" data-cat="garveys-skiffs-and-utility">
+                <span>⛵ Garveys & Skiffs</span>
+                <span class="tab-count">27</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab('cruisers-and-trawlers')" data-cat="cruisers-and-trawlers">
+                <span>🛥️ Cruisers & Trawlers</span>
+                <span class="tab-count">20</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab('reports')" data-cat="reports">
+                <span>📐 Tech Reports</span>
+                <span class="tab-count">16</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab('manuals')" data-cat="manuals">
+                <span>📚 Manuals</span>
+                <span class="tab-count">34</span>
+            </button>
+        </div>
+    </div>
 
-        <h2 id="reports" class="section-title" style="margin-top: 3rem;">Engineering Technical Reports</h2>
-        <div class="grid">
-            <div class="card">
-                <div class="badge">BR-001</div>
-                <h3>Registering Your Homebuilt Boat</h3>
-                <p>Official legal and Coast Guard procedures for registering and obtaining Hull Identification Numbers (HIN).</p>
+    <main class="container">
+        <!-- Boat Catalog Section -->
+        <div id="boatsSection">
+            <div class="section-header">
+                <h2><span>⛵</span> <span id="sectionTitle">All Boat Models</span></h2>
+                <span id="resultsCount" style="color: var(--text-dim); font-size: 0.9rem;">Showing 88 designs</span>
             </div>
-            <div class="card">
-                <div class="badge">BR-002</div>
-                <h3>Outboard Power for Homebuilt Boats</h3>
-                <p>Horsepower calculation formulas, transom weight ratings, and fuel consumption considerations.</p>
-            </div>
-            <div class="card">
-                <div class="badge">BR-003</div>
-                <h3>Homebuilt Boat Seaworthiness</h3>
-                <p>Principles of dynamic stability, reserve buoyancy in surf, and cockpit self-bailing design.</p>
-            </div>
-            <div class="card">
-                <div class="badge">BR-004</div>
-                <h3>Scarfing Lumber for Boat Building</h3>
-                <p>Detailed guide on scarfing long dimensional timber framing and chine stringers (8:1 bevels).</p>
-            </div>
-            <div class="card">
-                <div class="badge">BR-005</div>
-                <h3>Steam Bending Framing</h3>
-                <p>Constructing steam boxes and bending hardwood frames without splitting or deformation.</p>
-            </div>
-            <div class="card">
-                <div class="badge">BR-006</div>
-                <h3>Scarfing Plywood Panels</h3>
-                <p>Step-by-step methods for scarfing 4x8 plywood sheets into continuous full-length boat sides and bottoms.</p>
-            </div>
+            <div class="cards-grid" id="boatsGrid"></div>
         </div>
 
-        <h2 id="manuals" class="section-title" style="margin-top: 3rem;">Building Manuals & Publications</h2>
-        <div class="grid">
-            <div class="card">
-                <div class="badge">Textbook</div>
-                <h3>Illustrated Guide to Ply-on-Frame Boatbuilding</h3>
-                <p>Spira's complete illustrated handbook detailing frame construction, lofting, epoxy fillets, and sheathing.</p>
+        <!-- Technical Reports Section -->
+        <div id="reportsSection" style="margin-top: 3rem;">
+            <div class="section-header">
+                <h2><span>📐</span> <span>Engineering Technical Reports (BR-001 – BR-006)</span></h2>
             </div>
-            <div class="card">
-                <div class="badge">Guide</div>
-                <h3>How to Build an Easy Homebuilt Sea Kayak</h3>
-                <p>A fast, accessible kayak construction guide for weekend woodworkers and first-time builders.</p>
+            <div class="cards-grid" id="reportsGrid"></div>
+        </div>
+
+        <!-- Manuals Section -->
+        <div id="manualsSection" style="margin-top: 3rem;">
+            <div class="section-header">
+                <h2><span>📖</span> <span>Boatbuilding Manuals, Guides & Nautical Literature</span></h2>
             </div>
-            <div class="card">
-                <div class="badge">Standard</div>
-                <h3>USCG Backyard Boatbuilder Safety Manual</h3>
-                <p>Federal flotation, ventilation, and load capacity safety guidelines.</p>
+            <div class="cards-grid" id="manualsGrid"></div>
+        </div>
+    </main>
+
+    <!-- Modal for viewing all files -->
+    <div class="modal-backdrop" id="modalBackdrop" onclick="closeModal(event)">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <div>
+                    <h3 id="modalTitle" style="font-size: 1.25rem; color: #fff;">Boat Name</h3>
+                    <p id="modalCategory" style="color: var(--accent); font-size: 0.85rem;">Category</p>
+                </div>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="modalDesc" style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;"></div>
+            <div>
+                <h4 style="font-size: 0.85rem; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.5rem;">All Available Plans & Documents</h4>
+                <ul class="modal-file-list" id="modalFileList"></ul>
             </div>
         </div>
     </div>
 
     <footer>
-        <p>Jeff Spira Boat Plans Preservation Project &bull; Educational, Non-Commercial Memorial Archive</p>
+        <p><strong>Jeff Spira Boat Plans Preservation Archive</strong> &bull; Non-Commercial Educational Archive</p>
+        <p style="margin-top: 0.5rem;">Hosted and preserved on <a href="https://github.com/thecorcoran/Spira-Boats" target="_blank">GitHub</a> with automated Pages deployment.</p>
     </footer>
 
     <script>
-        const boats = [{"category": "Pacific Power Dories", "category_id": "pacific-power-dories", "name": "Seneca (15') - Pacific Power Dory", "folder": "15-seneca", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["SenecaMetricStudy.pdf", "SenecaStudy.pdf"]}, {"category": "Pacific Power Dories", "category_id": "pacific-power-dories", "name": "Courtenay Offshore (17') - Offshore Power Dory", "folder": "17-courtenay", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["CourtenayStudy.pdf"]}, {"category": "Pacific Power Dories", "category_id": "pacific-power-dories", "name": "Tillamook (17') - Pacific Power Dory", "folder": "17-tillamook", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["TillamookStudy.pdf"]}, {"category": "Pacific Power Dories", "category_id": "pacific-power-dories", "name": "Albion (19') - Pacific Power Dory", "folder": "19-albion", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["AlbionStudy.pdf", "AlbionMetricStudy.pdf"]}, {"category": "Pacific Power Dories", "category_id": "pacific-power-dories", "name": "Anacapa Offshore (19') - Offshore Power Dory", "folder": "19-anacapa", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["AnacapaMetricStudy.pdf", "AnacapaStudy.pdf"]}, {"category": "Pacific Power Dories", "category_id": "pacific-power-dories", "name": "Avila (20') - Pacific Power Dory", "folder": "20-avila", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["AvilaStudy.pdf"]}, {"category": "Pacific Power Dories", "category_id": "pacific-power-dories", "name": "Alamitos (21') - Pacific Power Dory", "folder": "21-alamitos", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["AlamitosStudy.pdf"]}, {"category": "Pacific Power Dories", "category_id": "pacific-power-dories", "name": "Farallon Offshore (23') - Offshore Power Dory", "folder": "23-farallon", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["FarallonStudy.pdf"]}, {"category": "Pacific Power Dories", "category_id": "pacific-power-dories", "name": "Winchester (23') - Pacific Power Dory", "folder": "23-winchester", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["WinchesterStudy.pdf"]}, {"category": "Pacific Power Dories", "category_id": "pacific-power-dories", "name": "Caladesi (25') - Pacific Power Dory", "folder": "25-caladesi", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["CaladesiBOM.pdf", "CaladesiStudy.pdf", "CaladesiMetricStudy.pdf"]}, {"category": "Pacific Power Dories", "category_id": "pacific-power-dories", "name": "Sitka (27') - Pacific Power Dory", "folder": "27-sitka", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["SitkaStudy.pdf", "SitkaMetricStudy.pdf"]}, {"category": "Pacific Power Dories", "category_id": "pacific-power-dories", "name": "Kodiak (32') - Pacific Power Dory", "folder": "32-kodiak", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["KodiakStudy.pdf"]}, {"category": "Carolina Dories", "category_id": "carolina-dories", "name": "Oysterman (16') - Carolina Dory", "folder": "16-oysterman", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["ordprt_calif_oyst.pdf", "OystStudy.pdf", "ordprt_world_oyst.pdf", "ordprt_usa_oyst.pdf", "OystermanMetricStudy.pdf", "OystermanStudy.pdf"]}, {"category": "Carolina Dories", "category_id": "carolina-dories", "name": "Carolinian (19') - Carolina Dory", "folder": "19-carolinian", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["ordprt_world_caro.pdf", "CarolinianBOM.pdf", "CaroStudy.pdf", "ordprt_calif_caro.pdf", "r_CaroConst.pdf", "CarolinianStudy.pdf", "CarolinianMetricStudy.pdf"]}, {"category": "Carolina Dories", "category_id": "carolina-dories", "name": "Hatteras (20') - Carolina Dory", "folder": "20-hatteras", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["HattStudy.pdf", "ordprt_world_hatt.pdf", "ordprt_usa_hatt.pdf", "ordprt_calif_hatt.pdf", "HatterasStudy.pdf"]}, {"category": "Carolina Dories", "category_id": "carolina-dories", "name": "Carolina Dory (22') - Carolina Dory", "folder": "22-carolina-dory", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": []}, {"category": "Drift Boats & River Dories", "category_id": "drift-boats-and-river", "name": "Rogue River (14') - Drift Boat", "folder": "14-rogue-river", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["RogueStudy.pdf"]}, {"category": "Drift Boats & River Dories", "category_id": "drift-boats-and-river", "name": "Mackenzie (16') - River Drift Boat", "folder": "16-mackenzie", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["ordprt_calif_mack.pdf", "MackinawStudy.pdf", "ordprt_usa_mack.pdf", "MackStudy.pdf", "ordprt_world_mack.pdf"]}, {"category": "Drift Boats & River Dories", "category_id": "drift-boats-and-river", "name": "Clackamas (17') - Drift Boat", "folder": "17-clackamas", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": []}, {"category": "Garveys, Skiffs & Utility Boats", "category_id": "garveys-skiffs-and-utility", "name": "Huntington Harbor (8') - Pram / Dinghy", "folder": "08-huntington-harbor", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["HuntingtonHarborBOM.pdf", "HuntingtonHarborMetricPlans.pdf"]}, {"category": "Garveys, Skiffs & Utility Boats", "category_id": "garveys-skiffs-and-utility", "name": "Newport Harbor (10') - Pram / Dinghy", "folder": "10-newport-harbor", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["NewporterStudy.pdf", "NewporterBOM.pdf"]}, {"category": "Garveys, Skiffs & Utility Boats", "category_id": "garveys-skiffs-and-utility", "name": "Channel Islands (12') - Skiff", "folder": "12-channel-islands", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": []}, {"category": "Garveys, Skiffs & Utility Boats", "category_id": "garveys-skiffs-and-utility", "name": "Mission Bay (14') - Garvey Skiff", "folder": "14-mission-bay", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["MissionBayMetricBOM.pdf", "MissStudy.pdf", "MiniMissStudy.pdf", "ordprt_world_miss.pdf", "MaxiMissStudy.pdf", "ordprt_calif_miss.pdf", "MiniMissBOM.pdf", "MissionBayBOM.pdf", "r_MissConst.pdf", "ordprt_usa_miss.pdf", "MissionBayMetricStudy.pdf"]}, {"category": "Garveys, Skiffs & Utility Boats", "category_id": "garveys-skiffs-and-utility", "name": "Back Bay (16') - Flats Skiff", "folder": "16-back-bay", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["r_BackConst.pdf", "BackBayStudy.pdf", "ordprt_world_back.pdf", "ordprt_calif_back.pdf", "BackStudy.pdf", "BackBayBOM.pdf", "ordprt_usa_back.pdf"]}, {"category": "Garveys, Skiffs & Utility Boats", "category_id": "garveys-skiffs-and-utility", "name": "San Clemente (16') - Garvey Skiff", "folder": "16-san-clemente", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["ClementeMetricStudy.pdf"]}, {"category": "Garveys, Skiffs & Utility Boats", "category_id": "garveys-skiffs-and-utility", "name": "San Diego (18') - Garvey Skiff", "folder": "18-san-diego", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": []}, {"category": "Garveys, Skiffs & Utility Boats", "category_id": "garveys-skiffs-and-utility", "name": "San Pedro (20') - Garvey Skiff", "folder": "20-san-pedro", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": []}, {"category": "Cruisers & Pocket Trawlers", "category_id": "cruisers-and-trawlers", "name": "Key Largo (20') - Pocket Cruiser", "folder": "20-key-largo", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["KeylStudy.pdf", "ordprt_world_keyl.pdf", "ordprt_usa_keyl.pdf", "KeyLargoMetricStudy.pdf", "KeyLargoStudy.pdf", "r_KeylConst.pdf", "ordprt_calif_keyl.pdf", "KeyLargoBOM.pdf"]}, {"category": "Cruisers & Pocket Trawlers", "category_id": "cruisers-and-trawlers", "name": "Chinook (21') - Pocket Trawler", "folder": "21-chinook", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["ordprt_usa_chin.pdf", "ordprt_calif_chin.pdf", "ChinookBOM.pdf", "ChinookMetricStudy.pdf", "ChinookStudy.pdf", "ChinStudy.pdf", "ordprt_world_chin.pdf"]}, {"category": "Cruisers & Pocket Trawlers", "category_id": "cruisers-and-trawlers", "name": "Gloucester (24') - Lobster Boat / Cruiser", "folder": "24-gloucester", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["GloustermanBOM.pdf", "ordprt_usa_glou.pdf", "r_GlouConst.pdf", "ordprt_calif_glou.pdf", "GloustermanStudy.pdf", "GlouStudy.pdf", "ordprt_world_glou.pdf"]}, {"category": "Cruisers & Pocket Trawlers", "category_id": "cruisers-and-trawlers", "name": "Kachemak (24') - Alaskan Cruiser", "folder": "24-kachemak", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["r_KachConst.pdf", "KachemakMetricStudy.pdf"]}, {"category": "Cruisers & Pocket Trawlers", "category_id": "cruisers-and-trawlers", "name": "Alaskan (26') - Cabin Cruiser / Workboat", "folder": "26-alaskan", "loa": "N/A", "beam": "N/A", "hull": "Ply-on-Frame", "power": "N/A", "payload": "N/A", "files": ["r_AlasConst.pdf", "ordprt_calif_alas.pdf", "AlasStudy.pdf", "AlaskanMetricBOM.pdf", "CalaStudy.pdf", "AlaskanStudy.pdf", "AlaskanMetricStudy.pdf"]}];
-        const grid = document.getElementById('boatGrid');
+        const BOATS = [{"id": "16-oysterman", "name": "Oysterman", "full_name": "16' Oysterman", "length_ft": 16, "length_str": "16'", "category_id": "carolina-dories", "category_title": "Carolina Dories", "category_icon": "\ud83d\udef6", "description": "Rugged 16' Carolina Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/carolina-dories/16-oysterman", "study_plan": {"filename": "OystStudy.pdf", "rel_path": "archive/boats/carolina-dories/16-oysterman/OystStudy.pdf", "size_str": "127 KB", "size_kb": 127.041015625}, "metric_study_plan": {"filename": "OystermanMetricStudy.pdf", "rel_path": "archive/boats/carolina-dories/16-oysterman/OystermanMetricStudy.pdf", "size_str": "356 KB", "size_kb": 355.5263671875}, "bom": null, "const_guide": null, "files": [{"filename": "OystStudy.pdf", "rel_path": "archive/boats/carolina-dories/16-oysterman/OystStudy.pdf", "size_str": "127 KB", "size_kb": 127.041015625}, {"filename": "OystermanMetricStudy.pdf", "rel_path": "archive/boats/carolina-dories/16-oysterman/OystermanMetricStudy.pdf", "size_str": "356 KB", "size_kb": 355.5263671875}, {"filename": "OystermanStudy.pdf", "rel_path": "archive/boats/carolina-dories/16-oysterman/OystermanStudy.pdf", "size_str": "348 KB", "size_kb": 348.048828125}, {"filename": "ordprt_calif_oyst.pdf", "rel_path": "archive/boats/carolina-dories/16-oysterman/ordprt_calif_oyst.pdf", "size_str": "48 KB", "size_kb": 48.109375}, {"filename": "ordprt_usa_oyst.pdf", "rel_path": "archive/boats/carolina-dories/16-oysterman/ordprt_usa_oyst.pdf", "size_str": "52 KB", "size_kb": 52.251953125}, {"filename": "ordprt_world_oyst.pdf", "rel_path": "archive/boats/carolina-dories/16-oysterman/ordprt_world_oyst.pdf", "size_str": "48 KB", "size_kb": 47.5068359375}]}, {"id": "17-wye-river", "name": "Wye River", "full_name": "17' Wye River", "length_ft": 17, "length_str": "17'", "category_id": "carolina-dories", "category_title": "Carolina Dories", "category_icon": "\ud83d\udef6", "description": "Rugged 17' Carolina Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/carolina-dories/17-wye-river", "study_plan": {"filename": "WyeRiverStudy.pdf", "rel_path": "archive/boats/carolina-dories/17-wye-river/WyeRiverStudy.pdf", "size_str": "768 KB", "size_kb": 767.6494140625}, "metric_study_plan": {"filename": "WyeRiverMetricStudy.pdf", "rel_path": "archive/boats/carolina-dories/17-wye-river/WyeRiverMetricStudy.pdf", "size_str": "71 KB", "size_kb": 71.287109375}, "bom": null, "const_guide": null, "files": [{"filename": "WyeRiverMetricStudy.pdf", "rel_path": "archive/boats/carolina-dories/17-wye-river/WyeRiverMetricStudy.pdf", "size_str": "71 KB", "size_kb": 71.287109375}, {"filename": "WyeRiverStudy.pdf", "rel_path": "archive/boats/carolina-dories/17-wye-river/WyeRiverStudy.pdf", "size_str": "768 KB", "size_kb": 767.6494140625}]}, {"id": "18-chesapeake", "name": "Chesapeake", "full_name": "18' Chesapeake", "length_ft": 18, "length_str": "18'", "category_id": "carolina-dories", "category_title": "Carolina Dories", "category_icon": "\ud83d\udef6", "description": "Rugged 18' Carolina Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/carolina-dories/18-chesapeake", "study_plan": {"filename": "ChesapekeStudy.pdf", "rel_path": "archive/boats/carolina-dories/18-chesapeake/ChesapekeStudy.pdf", "size_str": "253 KB", "size_kb": 253.1796875}, "metric_study_plan": {"filename": "ChesapekeMetricStudy.pdf", "rel_path": "archive/boats/carolina-dories/18-chesapeake/ChesapekeMetricStudy.pdf", "size_str": "72 KB", "size_kb": 72.033203125}, "bom": null, "const_guide": null, "files": [{"filename": "ChesapekeMetricStudy.pdf", "rel_path": "archive/boats/carolina-dories/18-chesapeake/ChesapekeMetricStudy.pdf", "size_str": "72 KB", "size_kb": 72.033203125}, {"filename": "ChesapekeStudy.pdf", "rel_path": "archive/boats/carolina-dories/18-chesapeake/ChesapekeStudy.pdf", "size_str": "253 KB", "size_kb": 253.1796875}, {"filename": "ordprt_usa_ches.pdf", "rel_path": "archive/boats/carolina-dories/18-chesapeake/ordprt_usa_ches.pdf", "size_str": "53 KB", "size_kb": 53.21484375}, {"filename": "ordprt_world_ches.pdf", "rel_path": "archive/boats/carolina-dories/18-chesapeake/ordprt_world_ches.pdf", "size_str": "48 KB", "size_kb": 48.3818359375}]}, {"id": "18-nova-scotian", "name": "Nova Scotian", "full_name": "18' Nova Scotian", "length_ft": 18, "length_str": "18'", "category_id": "carolina-dories", "category_title": "Carolina Dories", "category_icon": "\ud83d\udef6", "description": "Rugged 18' Carolina Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/carolina-dories/18-nova-scotian", "study_plan": {"filename": "NovaScotianStudy.pdf", "rel_path": "archive/boats/carolina-dories/18-nova-scotian/NovaScotianStudy.pdf", "size_str": "237 KB", "size_kb": 237.095703125}, "metric_study_plan": {"filename": "NovaScotianMetricStudy.pdf", "rel_path": "archive/boats/carolina-dories/18-nova-scotian/NovaScotianMetricStudy.pdf", "size_str": "243 KB", "size_kb": 243.3857421875}, "bom": {"filename": "NovaScotianMetricBOM.pdf", "rel_path": "archive/boats/carolina-dories/18-nova-scotian/NovaScotianMetricBOM.pdf", "size_str": "9 KB", "size_kb": 9.1943359375}, "const_guide": {"filename": "r_NovaConst.pdf", "rel_path": "archive/boats/carolina-dories/18-nova-scotian/r_NovaConst.pdf", "size_str": "2.8 MB", "size_kb": 2831.068359375}, "files": [{"filename": "NovaScotianBOM.pdf", "rel_path": "archive/boats/carolina-dories/18-nova-scotian/NovaScotianBOM.pdf", "size_str": "9 KB", "size_kb": 9.3271484375}, {"filename": "NovaScotianMetricBOM.pdf", "rel_path": "archive/boats/carolina-dories/18-nova-scotian/NovaScotianMetricBOM.pdf", "size_str": "9 KB", "size_kb": 9.1943359375}, {"filename": "NovaScotianMetricStudy.pdf", "rel_path": "archive/boats/carolina-dories/18-nova-scotian/NovaScotianMetricStudy.pdf", "size_str": "243 KB", "size_kb": 243.3857421875}, {"filename": "NovaScotianStudy.pdf", "rel_path": "archive/boats/carolina-dories/18-nova-scotian/NovaScotianStudy.pdf", "size_str": "237 KB", "size_kb": 237.095703125}, {"filename": "NovaStudy.pdf", "rel_path": "archive/boats/carolina-dories/18-nova-scotian/NovaStudy.pdf", "size_str": "80 KB", "size_kb": 80.1201171875}, {"filename": "r_NovaConst.pdf", "rel_path": "archive/boats/carolina-dories/18-nova-scotian/r_NovaConst.pdf", "size_str": "2.8 MB", "size_kb": 2831.068359375}]}, {"id": "19-carolinian", "name": "Carolinian", "full_name": "19' Carolinian", "length_ft": 19, "length_str": "19'", "category_id": "carolina-dories", "category_title": "Carolina Dories", "category_icon": "\ud83d\udef6", "description": "Rugged 19' Carolina Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/carolina-dories/19-carolinian", "study_plan": {"filename": "CaroStudy.pdf", "rel_path": "archive/boats/carolina-dories/19-carolinian/CaroStudy.pdf", "size_str": "82 KB", "size_kb": 82.0693359375}, "metric_study_plan": {"filename": "CarolinianMetricStudy.pdf", "rel_path": "archive/boats/carolina-dories/19-carolinian/CarolinianMetricStudy.pdf", "size_str": "355 KB", "size_kb": 354.6337890625}, "bom": {"filename": "CarolinianBOM.pdf", "rel_path": "archive/boats/carolina-dories/19-carolinian/CarolinianBOM.pdf", "size_str": "45 KB", "size_kb": 44.5400390625}, "const_guide": {"filename": "r_CaroConst.pdf", "rel_path": "archive/boats/carolina-dories/19-carolinian/r_CaroConst.pdf", "size_str": "511 KB", "size_kb": 510.724609375}, "files": [{"filename": "CaroStudy.pdf", "rel_path": "archive/boats/carolina-dories/19-carolinian/CaroStudy.pdf", "size_str": "82 KB", "size_kb": 82.0693359375}, {"filename": "CarolinianBOM.pdf", "rel_path": "archive/boats/carolina-dories/19-carolinian/CarolinianBOM.pdf", "size_str": "45 KB", "size_kb": 44.5400390625}, {"filename": "CarolinianMetricStudy.pdf", "rel_path": "archive/boats/carolina-dories/19-carolinian/CarolinianMetricStudy.pdf", "size_str": "355 KB", "size_kb": 354.6337890625}, {"filename": "CarolinianStudy.pdf", "rel_path": "archive/boats/carolina-dories/19-carolinian/CarolinianStudy.pdf", "size_str": "359 KB", "size_kb": 359.353515625}, {"filename": "ordprt_calif_caro.pdf", "rel_path": "archive/boats/carolina-dories/19-carolinian/ordprt_calif_caro.pdf", "size_str": "48 KB", "size_kb": 48.205078125}, {"filename": "ordprt_world_caro.pdf", "rel_path": "archive/boats/carolina-dories/19-carolinian/ordprt_world_caro.pdf", "size_str": "47 KB", "size_kb": 47.4560546875}, {"filename": "r_CaroConst.pdf", "rel_path": "archive/boats/carolina-dories/19-carolinian/r_CaroConst.pdf", "size_str": "511 KB", "size_kb": 510.724609375}]}, {"id": "20-hatteras", "name": "Hatteras", "full_name": "20' Hatteras", "length_ft": 20, "length_str": "20'", "category_id": "carolina-dories", "category_title": "Carolina Dories", "category_icon": "\ud83d\udef6", "description": "Rugged 20' Carolina Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/carolina-dories/20-hatteras", "study_plan": {"filename": "HattStudy.pdf", "rel_path": "archive/boats/carolina-dories/20-hatteras/HattStudy.pdf", "size_str": "82 KB", "size_kb": 82.4345703125}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "HattStudy.pdf", "rel_path": "archive/boats/carolina-dories/20-hatteras/HattStudy.pdf", "size_str": "82 KB", "size_kb": 82.4345703125}, {"filename": "HatterasStudy.pdf", "rel_path": "archive/boats/carolina-dories/20-hatteras/HatterasStudy.pdf", "size_str": "282 KB", "size_kb": 281.7451171875}, {"filename": "ordprt_calif_hatt.pdf", "rel_path": "archive/boats/carolina-dories/20-hatteras/ordprt_calif_hatt.pdf", "size_str": "48 KB", "size_kb": 48.427734375}, {"filename": "ordprt_usa_hatt.pdf", "rel_path": "archive/boats/carolina-dories/20-hatteras/ordprt_usa_hatt.pdf", "size_str": "52 KB", "size_kb": 52.1640625}, {"filename": "ordprt_world_hatt.pdf", "rel_path": "archive/boats/carolina-dories/20-hatteras/ordprt_world_hatt.pdf", "size_str": "48 KB", "size_kb": 47.5595703125}]}, {"id": "21-outer-banks", "name": "Outer Banks", "full_name": "21' Outer Banks", "length_ft": 21, "length_str": "21'", "category_id": "carolina-dories", "category_title": "Carolina Dories", "category_icon": "\ud83d\udef6", "description": "Rugged 21' Carolina Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/carolina-dories/21-outer-banks", "study_plan": {"filename": "OuterBanksStudy.pdf", "rel_path": "archive/boats/carolina-dories/21-outer-banks/OuterBanksStudy.pdf", "size_str": "72 KB", "size_kb": 71.87890625}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "OuterBanksStudy.pdf", "rel_path": "archive/boats/carolina-dories/21-outer-banks/OuterBanksStudy.pdf", "size_str": "72 KB", "size_kb": 71.87890625}]}, {"id": "22-carolina-dory", "name": "Carolina Dory", "full_name": "22' Carolina Dory", "length_ft": 22, "length_str": "22'", "category_id": "carolina-dories", "category_title": "Carolina Dories", "category_icon": "\ud83d\udef6", "description": "Rugged 22' Carolina Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/carolina-dories/22-carolina-dory", "study_plan": null, "metric_study_plan": null, "bom": null, "const_guide": null, "files": []}, {"id": "20-bahaman", "name": "Bahaman", "full_name": "20' Bahaman", "length_ft": 20, "length_str": "20'", "category_id": "cruisers-and-trawlers", "category_title": "Cruisers & Trawlers", "category_icon": "\ud83d\udee5\ufe0f", "description": "Rugged 20' Cruisers & Trawlers design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/cruisers-and-trawlers/20-bahaman", "study_plan": {"filename": "BahaStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-bahaman/BahaStudy.pdf", "size_str": "87 KB", "size_kb": 87.4892578125}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "BahaStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-bahaman/BahaStudy.pdf", "size_str": "87 KB", "size_kb": 87.4892578125}, {"filename": "BahamanStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-bahaman/BahamanStudy.pdf", "size_str": "270 KB", "size_kb": 269.9091796875}, {"filename": "ordprt_usa_baha.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-bahaman/ordprt_usa_baha.pdf", "size_str": "52 KB", "size_kb": 52.287109375}, {"filename": "ordprt_world_baha.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-bahaman/ordprt_world_baha.pdf", "size_str": "48 KB", "size_kb": 47.51171875}]}, {"id": "20-canadian", "name": "Canadian", "full_name": "20' Canadian", "length_ft": 20, "length_str": "20'", "category_id": "cruisers-and-trawlers", "category_title": "Cruisers & Trawlers", "category_icon": "\ud83d\udee5\ufe0f", "description": "Rugged 20' Cruisers & Trawlers design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/cruisers-and-trawlers/20-canadian", "study_plan": {"filename": "CanaStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-canadian/CanaStudy.pdf", "size_str": "124 KB", "size_kb": 123.5673828125}, "metric_study_plan": null, "bom": {"filename": "CanadianBOM.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-canadian/CanadianBOM.pdf", "size_str": "45 KB", "size_kb": 44.8896484375}, "const_guide": null, "files": [{"filename": "CanaStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-canadian/CanaStudy.pdf", "size_str": "124 KB", "size_kb": 123.5673828125}, {"filename": "CanadianBOM.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-canadian/CanadianBOM.pdf", "size_str": "45 KB", "size_kb": 44.8896484375}, {"filename": "CanadianStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-canadian/CanadianStudy.pdf", "size_str": "259 KB", "size_kb": 258.5439453125}, {"filename": "ordprt_usa_cana.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-canadian/ordprt_usa_cana.pdf", "size_str": "52 KB", "size_kb": 52.078125}, {"filename": "ordprt_world_cana.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-canadian/ordprt_world_cana.pdf", "size_str": "49 KB", "size_kb": 48.6044921875}]}, {"id": "20-key-largo", "name": "Key Largo", "full_name": "20' Key Largo", "length_ft": 20, "length_str": "20'", "category_id": "cruisers-and-trawlers", "category_title": "Cruisers & Trawlers", "category_icon": "\ud83d\udee5\ufe0f", "description": "Rugged 20' Cruisers & Trawlers design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/cruisers-and-trawlers/20-key-largo", "study_plan": {"filename": "KeyLargoStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-key-largo/KeyLargoStudy.pdf", "size_str": "273 KB", "size_kb": 272.9599609375}, "metric_study_plan": {"filename": "KeyLargoMetricStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-key-largo/KeyLargoMetricStudy.pdf", "size_str": "861 KB", "size_kb": 861.4306640625}, "bom": {"filename": "KeyLargoBOM.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-key-largo/KeyLargoBOM.pdf", "size_str": "48 KB", "size_kb": 48.373046875}, "const_guide": {"filename": "r_KeylConst.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-key-largo/r_KeylConst.pdf", "size_str": "1.0 MB", "size_kb": 1071.1494140625}, "files": [{"filename": "KeyLargoBOM.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-key-largo/KeyLargoBOM.pdf", "size_str": "48 KB", "size_kb": 48.373046875}, {"filename": "KeyLargoMetricStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-key-largo/KeyLargoMetricStudy.pdf", "size_str": "861 KB", "size_kb": 861.4306640625}, {"filename": "KeyLargoStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-key-largo/KeyLargoStudy.pdf", "size_str": "273 KB", "size_kb": 272.9599609375}, {"filename": "KeylStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-key-largo/KeylStudy.pdf", "size_str": "127 KB", "size_kb": 126.6591796875}, {"filename": "ordprt_calif_keyl.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-key-largo/ordprt_calif_keyl.pdf", "size_str": "48 KB", "size_kb": 48.40625}, {"filename": "ordprt_usa_keyl.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-key-largo/ordprt_usa_keyl.pdf", "size_str": "53 KB", "size_kb": 52.6025390625}, {"filename": "ordprt_world_keyl.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-key-largo/ordprt_world_keyl.pdf", "size_str": "48 KB", "size_kb": 47.82421875}, {"filename": "r_KeylConst.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-key-largo/r_KeylConst.pdf", "size_str": "1.0 MB", "size_kb": 1071.1494140625}]}, {"id": "20-key-west", "name": "Key West", "full_name": "20' Key West", "length_ft": 20, "length_str": "20'", "category_id": "cruisers-and-trawlers", "category_title": "Cruisers & Trawlers", "category_icon": "\ud83d\udee5\ufe0f", "description": "Rugged 20' Cruisers & Trawlers design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/cruisers-and-trawlers/20-key-west", "study_plan": {"filename": "KeyWestStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-key-west/KeyWestStudy.pdf", "size_str": "76 KB", "size_kb": 75.7783203125}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "KeyWestStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-key-west/KeyWestStudy.pdf", "size_str": "76 KB", "size_kb": 75.7783203125}, {"filename": "pic_KeyWest_study.jpg", "rel_path": "archive/boats/cruisers-and-trawlers/20-key-west/pic_KeyWest_study.jpg", "size_str": "113 KB", "size_kb": 113.4013671875}]}, {"id": "20-newfie", "name": "Newfie", "full_name": "20' Newfie", "length_ft": 20, "length_str": "20'", "category_id": "cruisers-and-trawlers", "category_title": "Cruisers & Trawlers", "category_icon": "\ud83d\udee5\ufe0f", "description": "Rugged 20' Cruisers & Trawlers design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/cruisers-and-trawlers/20-newfie", "study_plan": {"filename": "NewfStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-newfie/NewfStudy.pdf", "size_str": "107 KB", "size_kb": 106.7236328125}, "metric_study_plan": {"filename": "NewfieMetricStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-newfie/NewfieMetricStudy.pdf", "size_str": "564 KB", "size_kb": 563.9248046875}, "bom": null, "const_guide": null, "files": [{"filename": "NewfStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-newfie/NewfStudy.pdf", "size_str": "107 KB", "size_kb": 106.7236328125}, {"filename": "NewfieMetricStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/20-newfie/NewfieMetricStudy.pdf", "size_str": "564 KB", "size_kb": 563.9248046875}]}, {"id": "21-chalmette", "name": "Chalmette", "full_name": "21' Chalmette", "length_ft": 21, "length_str": "21'", "category_id": "cruisers-and-trawlers", "category_title": "Cruisers & Trawlers", "category_icon": "\ud83d\udee5\ufe0f", "description": "Rugged 21' Cruisers & Trawlers design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/cruisers-and-trawlers/21-chalmette", "study_plan": {"filename": "ChalmetteStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/21-chalmette/ChalmetteStudy.pdf", "size_str": "75 KB", "size_kb": 74.94140625}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "ChalmetteStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/21-chalmette/ChalmetteStudy.pdf", "size_str": "75 KB", "size_kb": 74.94140625}]}, {"id": "21-chinook", "name": "Chinook", "full_name": "21' Chinook", "length_ft": 21, "length_str": "21'", "category_id": "cruisers-and-trawlers", "category_title": "Cruisers & Trawlers", "category_icon": "\ud83d\udee5\ufe0f", "description": "Rugged 21' Cruisers & Trawlers design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/cruisers-and-trawlers/21-chinook", "study_plan": {"filename": "ChinStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/21-chinook/ChinStudy.pdf", "size_str": "130 KB", "size_kb": 129.8271484375}, "metric_study_plan": {"filename": "ChinookMetricStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/21-chinook/ChinookMetricStudy.pdf", "size_str": "341 KB", "size_kb": 341.0712890625}, "bom": {"filename": "ChinookBOM.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/21-chinook/ChinookBOM.pdf", "size_str": "49 KB", "size_kb": 48.8828125}, "const_guide": null, "files": [{"filename": "ChinStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/21-chinook/ChinStudy.pdf", "size_str": "130 KB", "size_kb": 129.8271484375}, {"filename": "ChinookBOM.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/21-chinook/ChinookBOM.pdf", "size_str": "49 KB", "size_kb": 48.8828125}, {"filename": "ChinookMetricStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/21-chinook/ChinookMetricStudy.pdf", "size_str": "341 KB", "size_kb": 341.0712890625}, {"filename": "ChinookStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/21-chinook/ChinookStudy.pdf", "size_str": "260 KB", "size_kb": 260.28125}, {"filename": "ordprt_calif_chin.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/21-chinook/ordprt_calif_chin.pdf", "size_str": "48 KB", "size_kb": 48.0029296875}, {"filename": "ordprt_usa_chin.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/21-chinook/ordprt_usa_chin.pdf", "size_str": "52 KB", "size_kb": 52.458984375}, {"filename": "ordprt_world_chin.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/21-chinook/ordprt_world_chin.pdf", "size_str": "48 KB", "size_kb": 48.154296875}]}, {"id": "21-st-croix", "name": "St Croix", "full_name": "21' St Croix", "length_ft": 21, "length_str": "21'", "category_id": "cruisers-and-trawlers", "category_title": "Cruisers & Trawlers", "category_icon": "\ud83d\udee5\ufe0f", "description": "Rugged 21' Cruisers & Trawlers design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/cruisers-and-trawlers/21-st-croix", "study_plan": {"filename": "StCroixStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/21-st-croix/StCroixStudy.pdf", "size_str": "40 KB", "size_kb": 39.64453125}, "metric_study_plan": null, "bom": null, "const_guide": {"filename": "r_StCrConst.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/21-st-croix/r_StCrConst.pdf", "size_str": "1.5 MB", "size_kb": 1547.4013671875}, "files": [{"filename": "StCroixStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/21-st-croix/StCroixStudy.pdf", "size_str": "40 KB", "size_kb": 39.64453125}, {"filename": "r_StCrConst.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/21-st-croix/r_StCrConst.pdf", "size_str": "1.5 MB", "size_kb": 1547.4013671875}]}, {"id": "22-greenlander", "name": "Greenlander", "full_name": "22' Greenlander", "length_ft": 22, "length_str": "22'", "category_id": "cruisers-and-trawlers", "category_title": "Cruisers & Trawlers", "category_icon": "\ud83d\udee5\ufe0f", "description": "Rugged 22' Cruisers & Trawlers design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/cruisers-and-trawlers/22-greenlander", "study_plan": {"filename": "GreeStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/22-greenlander/GreeStudy.pdf", "size_str": "120 KB", "size_kb": 120.4638671875}, "metric_study_plan": null, "bom": {"filename": "GreenlanderBOM.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/22-greenlander/GreenlanderBOM.pdf", "size_str": "47 KB", "size_kb": 47.185546875}, "const_guide": null, "files": [{"filename": "GreeStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/22-greenlander/GreeStudy.pdf", "size_str": "120 KB", "size_kb": 120.4638671875}, {"filename": "GreenlanderBOM.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/22-greenlander/GreenlanderBOM.pdf", "size_str": "47 KB", "size_kb": 47.185546875}, {"filename": "GreenlanderStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/22-greenlander/GreenlanderStudy.pdf", "size_str": "245 KB", "size_kb": 245.1240234375}, {"filename": "ordprt_usa_gree.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/22-greenlander/ordprt_usa_gree.pdf", "size_str": "53 KB", "size_kb": 53.212890625}, {"filename": "ordprt_world_gree.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/22-greenlander/ordprt_world_gree.pdf", "size_str": "49 KB", "size_kb": 48.5517578125}]}, {"id": "22-juneau", "name": "Juneau", "full_name": "22' Juneau", "length_ft": 22, "length_str": "22'", "category_id": "cruisers-and-trawlers", "category_title": "Cruisers & Trawlers", "category_icon": "\ud83d\udee5\ufe0f", "description": "Rugged 22' Cruisers & Trawlers design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/cruisers-and-trawlers/22-juneau", "study_plan": {"filename": "JuneStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/22-juneau/JuneStudy.pdf", "size_str": "75 KB", "size_kb": 75.408203125}, "metric_study_plan": {"filename": "JuneauMetricStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/22-juneau/JuneauMetricStudy.pdf", "size_str": "311 KB", "size_kb": 310.71875}, "bom": {"filename": "JuneauBOM.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/22-juneau/JuneauBOM.pdf", "size_str": "47 KB", "size_kb": 46.6044921875}, "const_guide": {"filename": "r_JuneConst.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/22-juneau/r_JuneConst.pdf", "size_str": "333 KB", "size_kb": 332.6279296875}, "files": [{"filename": "JuneStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/22-juneau/JuneStudy.pdf", "size_str": "75 KB", "size_kb": 75.408203125}, {"filename": "JuneauBOM.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/22-juneau/JuneauBOM.pdf", "size_str": "47 KB", "size_kb": 46.6044921875}, {"filename": "JuneauMetricStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/22-juneau/JuneauMetricStudy.pdf", "size_str": "311 KB", "size_kb": 310.71875}, {"filename": "JuneauStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/22-juneau/JuneauStudy.pdf", "size_str": "228 KB", "size_kb": 227.62890625}, {"filename": "r_JuneConst.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/22-juneau/r_JuneConst.pdf", "size_str": "333 KB", "size_kb": 332.6279296875}]}, {"id": "22-labrador", "name": "Labrador", "full_name": "22' Labrador", "length_ft": 22, "length_str": "22'", "category_id": "cruisers-and-trawlers", "category_title": "Cruisers & Trawlers", "category_icon": "\ud83d\udee5\ufe0f", "description": "Rugged 22' Cruisers & Trawlers design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/cruisers-and-trawlers/22-labrador", "study_plan": {"filename": "LabrStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/22-labrador/LabrStudy.pdf", "size_str": "89 KB", "size_kb": 88.7255859375}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "LabrStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/22-labrador/LabrStudy.pdf", "size_str": "89 KB", "size_kb": 88.7255859375}, {"filename": "LabradorStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/22-labrador/LabradorStudy.pdf", "size_str": "269 KB", "size_kb": 269.12890625}]}, {"id": "22-lone-star", "name": "Lone Star", "full_name": "22' Lone Star", "length_ft": 22, "length_str": "22'", "category_id": "cruisers-and-trawlers", "category_title": "Cruisers & Trawlers", "category_icon": "\ud83d\udee5\ufe0f", "description": "Rugged 22' Cruisers & Trawlers design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/cruisers-and-trawlers/22-lone-star", "study_plan": {"filename": "LoneStarStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/22-lone-star/LoneStarStudy.pdf", "size_str": "267 KB", "size_kb": 267.0810546875}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "LoneStarStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/22-lone-star/LoneStarStudy.pdf", "size_str": "267 KB", "size_kb": 267.0810546875}]}, {"id": "23-astoria", "name": "Astoria", "full_name": "23' Astoria", "length_ft": 23, "length_str": "23'", "category_id": "cruisers-and-trawlers", "category_title": "Cruisers & Trawlers", "category_icon": "\ud83d\udee5\ufe0f", "description": "Rugged 23' Cruisers & Trawlers design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/cruisers-and-trawlers/23-astoria", "study_plan": {"filename": "AstoStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/23-astoria/AstoStudy.pdf", "size_str": "80 KB", "size_kb": 79.728515625}, "metric_study_plan": null, "bom": {"filename": "AstoriaBOM.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/23-astoria/AstoriaBOM.pdf", "size_str": "20 KB", "size_kb": 19.8408203125}, "const_guide": null, "files": [{"filename": "AstoBOM.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/23-astoria/AstoBOM.pdf", "size_str": "20 KB", "size_kb": 19.8408203125}, {"filename": "AstoStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/23-astoria/AstoStudy.pdf", "size_str": "80 KB", "size_kb": 79.728515625}, {"filename": "AstoriaBOM.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/23-astoria/AstoriaBOM.pdf", "size_str": "20 KB", "size_kb": 19.8408203125}, {"filename": "AstoriaStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/23-astoria/AstoriaStudy.pdf", "size_str": "269 KB", "size_kb": 269.40234375}]}, {"id": "24-champlain", "name": "Champlain", "full_name": "24' Champlain", "length_ft": 24, "length_str": "24'", "category_id": "cruisers-and-trawlers", "category_title": "Cruisers & Trawlers", "category_icon": "\ud83d\udee5\ufe0f", "description": "Rugged 24' Cruisers & Trawlers design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/cruisers-and-trawlers/24-champlain", "study_plan": {"filename": "ChamplainStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/24-champlain/ChamplainStudy.pdf", "size_str": "74 KB", "size_kb": 73.9482421875}, "metric_study_plan": {"filename": "ChamplainMetricStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/24-champlain/ChamplainMetricStudy.pdf", "size_str": "98 KB", "size_kb": 98.1767578125}, "bom": null, "const_guide": {"filename": "r_ChamConst.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/24-champlain/r_ChamConst.pdf", "size_str": "30.5 MB", "size_kb": 31186.015625}, "files": [{"filename": "ChamplainMetricStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/24-champlain/ChamplainMetricStudy.pdf", "size_str": "98 KB", "size_kb": 98.1767578125}, {"filename": "ChamplainStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/24-champlain/ChamplainStudy.pdf", "size_str": "74 KB", "size_kb": 73.9482421875}, {"filename": "r_ChamConst.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/24-champlain/r_ChamConst.pdf", "size_str": "30.5 MB", "size_kb": 31186.015625}]}, {"id": "24-gloucester", "name": "Gloucester", "full_name": "24' Gloucester", "length_ft": 24, "length_str": "24'", "category_id": "cruisers-and-trawlers", "category_title": "Cruisers & Trawlers", "category_icon": "\ud83d\udee5\ufe0f", "description": "Rugged 24' Cruisers & Trawlers design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/cruisers-and-trawlers/24-gloucester", "study_plan": {"filename": "GlouStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/24-gloucester/GlouStudy.pdf", "size_str": "69 KB", "size_kb": 69.283203125}, "metric_study_plan": null, "bom": {"filename": "GloustermanBOM.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/24-gloucester/GloustermanBOM.pdf", "size_str": "47 KB", "size_kb": 47.490234375}, "const_guide": {"filename": "r_GlouConst.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/24-gloucester/r_GlouConst.pdf", "size_str": "255 KB", "size_kb": 254.8310546875}, "files": [{"filename": "GlouStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/24-gloucester/GlouStudy.pdf", "size_str": "69 KB", "size_kb": 69.283203125}, {"filename": "GloustermanBOM.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/24-gloucester/GloustermanBOM.pdf", "size_str": "47 KB", "size_kb": 47.490234375}, {"filename": "GloustermanStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/24-gloucester/GloustermanStudy.pdf", "size_str": "200 KB", "size_kb": 199.765625}, {"filename": "ordprt_calif_glou.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/24-gloucester/ordprt_calif_glou.pdf", "size_str": "49 KB", "size_kb": 49.4287109375}, {"filename": "ordprt_usa_glou.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/24-gloucester/ordprt_usa_glou.pdf", "size_str": "53 KB", "size_kb": 53.16796875}, {"filename": "ordprt_world_glou.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/24-gloucester/ordprt_world_glou.pdf", "size_str": "48 KB", "size_kb": 47.927734375}, {"filename": "r_GlouConst.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/24-gloucester/r_GlouConst.pdf", "size_str": "255 KB", "size_kb": 254.8310546875}]}, {"id": "24-kachemak", "name": "Kachemak", "full_name": "24' Kachemak", "length_ft": 24, "length_str": "24'", "category_id": "cruisers-and-trawlers", "category_title": "Cruisers & Trawlers", "category_icon": "\ud83d\udee5\ufe0f", "description": "Rugged 24' Cruisers & Trawlers design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/cruisers-and-trawlers/24-kachemak", "study_plan": null, "metric_study_plan": {"filename": "KachemakMetricStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/24-kachemak/KachemakMetricStudy.pdf", "size_str": "782 KB", "size_kb": 781.5771484375}, "bom": null, "const_guide": {"filename": "r_KachConst.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/24-kachemak/r_KachConst.pdf", "size_str": "2.2 MB", "size_kb": 2227.6611328125}, "files": [{"filename": "KachemakMetricStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/24-kachemak/KachemakMetricStudy.pdf", "size_str": "782 KB", "size_kb": 781.5771484375}, {"filename": "r_KachConst.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/24-kachemak/r_KachConst.pdf", "size_str": "2.2 MB", "size_kb": 2227.6611328125}]}, {"id": "25-zuiderzee", "name": "Zuiderzee", "full_name": "25' Zuiderzee", "length_ft": 25, "length_str": "25'", "category_id": "cruisers-and-trawlers", "category_title": "Cruisers & Trawlers", "category_icon": "\ud83d\udee5\ufe0f", "description": "Rugged 25' Cruisers & Trawlers design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/cruisers-and-trawlers/25-zuiderzee", "study_plan": {"filename": "ZuiderzeeStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/25-zuiderzee/ZuiderzeeStudy.pdf", "size_str": "826 KB", "size_kb": 826.294921875}, "metric_study_plan": {"filename": "ZuiderzeeMetricStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/25-zuiderzee/ZuiderzeeMetricStudy.pdf", "size_str": "759 KB", "size_kb": 758.9169921875}, "bom": null, "const_guide": null, "files": [{"filename": "ZuiderzeeMetricStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/25-zuiderzee/ZuiderzeeMetricStudy.pdf", "size_str": "759 KB", "size_kb": 758.9169921875}, {"filename": "ZuiderzeeStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/25-zuiderzee/ZuiderzeeStudy.pdf", "size_str": "826 KB", "size_kb": 826.294921875}]}, {"id": "26-alaskan", "name": "Alaskan", "full_name": "26' Alaskan", "length_ft": 26, "length_str": "26'", "category_id": "cruisers-and-trawlers", "category_title": "Cruisers & Trawlers", "category_icon": "\ud83d\udee5\ufe0f", "description": "Rugged 26' Cruisers & Trawlers design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/cruisers-and-trawlers/26-alaskan", "study_plan": {"filename": "AlasStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/26-alaskan/AlasStudy.pdf", "size_str": "82 KB", "size_kb": 82.484375}, "metric_study_plan": {"filename": "AlaskanMetricStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/26-alaskan/AlaskanMetricStudy.pdf", "size_str": "217 KB", "size_kb": 216.8662109375}, "bom": {"filename": "AlaskanMetricBOM.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/26-alaskan/AlaskanMetricBOM.pdf", "size_str": "10 KB", "size_kb": 9.8173828125}, "const_guide": {"filename": "r_AlasConst.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/26-alaskan/r_AlasConst.pdf", "size_str": "604 KB", "size_kb": 603.919921875}, "files": [{"filename": "AlasStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/26-alaskan/AlasStudy.pdf", "size_str": "82 KB", "size_kb": 82.484375}, {"filename": "AlaskanMetricBOM.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/26-alaskan/AlaskanMetricBOM.pdf", "size_str": "10 KB", "size_kb": 9.8173828125}, {"filename": "AlaskanMetricStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/26-alaskan/AlaskanMetricStudy.pdf", "size_str": "217 KB", "size_kb": 216.8662109375}, {"filename": "AlaskanStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/26-alaskan/AlaskanStudy.pdf", "size_str": "268 KB", "size_kb": 267.7255859375}, {"filename": "CalaStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/26-alaskan/CalaStudy.pdf", "size_str": "85 KB", "size_kb": 85.4912109375}, {"filename": "ordprt_calif_alas.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/26-alaskan/ordprt_calif_alas.pdf", "size_str": "49 KB", "size_kb": 49.0458984375}, {"filename": "r_AlasConst.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/26-alaskan/r_AlasConst.pdf", "size_str": "604 KB", "size_kb": 603.919921875}]}, {"id": "26-valdez", "name": "Valdez", "full_name": "26' Valdez", "length_ft": 26, "length_str": "26'", "category_id": "cruisers-and-trawlers", "category_title": "Cruisers & Trawlers", "category_icon": "\ud83d\udee5\ufe0f", "description": "Rugged 26' Cruisers & Trawlers design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/cruisers-and-trawlers/26-valdez", "study_plan": {"filename": "ValdezStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/26-valdez/ValdezStudy.pdf", "size_str": "941 KB", "size_kb": 941.341796875}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "ValdezStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/26-valdez/ValdezStudy.pdf", "size_str": "941 KB", "size_kb": 941.341796875}]}, {"id": "28-glacier-bay", "name": "Glacier Bay", "full_name": "28' Glacier Bay", "length_ft": 28, "length_str": "28'", "category_id": "cruisers-and-trawlers", "category_title": "Cruisers & Trawlers", "category_icon": "\ud83d\udee5\ufe0f", "description": "Rugged 28' Cruisers & Trawlers design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/cruisers-and-trawlers/28-glacier-bay", "study_plan": {"filename": "GlacierBayStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/28-glacier-bay/GlacierBayStudy.pdf", "size_str": "80 KB", "size_kb": 79.732421875}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "GlacierBayStudy.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/28-glacier-bay/GlacierBayStudy.pdf", "size_str": "80 KB", "size_kb": 79.732421875}, {"filename": "Study_GlacierBay.pdf", "rel_path": "archive/boats/cruisers-and-trawlers/28-glacier-bay/Study_GlacierBay.pdf", "size_str": "934 KB", "size_kb": 933.5205078125}]}, {"id": "14-riverman", "name": "Riverman", "full_name": "14' Riverman", "length_ft": 14, "length_str": "14'", "category_id": "drift-boats-and-river", "category_title": "Drift Boats & River", "category_icon": "\ud83c\udfa3", "description": "Rugged 14' Drift Boats & River design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/drift-boats-and-river/14-riverman", "study_plan": {"filename": "CaneRiverStudy.pdf", "rel_path": "archive/boats/drift-boats-and-river/14-riverman/CaneRiverStudy.pdf", "size_str": "349 KB", "size_kb": 348.826171875}, "metric_study_plan": {"filename": "WillametteRiverMetricStudy.pdf", "rel_path": "archive/boats/drift-boats-and-river/14-riverman/WillametteRiverMetricStudy.pdf", "size_str": "301 KB", "size_kb": 300.646484375}, "bom": {"filename": "RivermanBOM.pdf", "rel_path": "archive/boats/drift-boats-and-river/14-riverman/RivermanBOM.pdf", "size_str": "24 KB", "size_kb": 23.8681640625}, "const_guide": null, "files": [{"filename": "CaneRiverStudy.pdf", "rel_path": "archive/boats/drift-boats-and-river/14-riverman/CaneRiverStudy.pdf", "size_str": "349 KB", "size_kb": 348.826171875}, {"filename": "RiveStudy.pdf", "rel_path": "archive/boats/drift-boats-and-river/14-riverman/RiveStudy.pdf", "size_str": "121 KB", "size_kb": 121.037109375}, {"filename": "RivermanBOM.pdf", "rel_path": "archive/boats/drift-boats-and-river/14-riverman/RivermanBOM.pdf", "size_str": "24 KB", "size_kb": 23.8681640625}, {"filename": "RivermanStudy.pdf", "rel_path": "archive/boats/drift-boats-and-river/14-riverman/RivermanStudy.pdf", "size_str": "245 KB", "size_kb": 244.88671875}, {"filename": "WillametteRiverMetricStudy.pdf", "rel_path": "archive/boats/drift-boats-and-river/14-riverman/WillametteRiverMetricStudy.pdf", "size_str": "301 KB", "size_kb": 300.646484375}, {"filename": "WillametteRiverStudy.pdf", "rel_path": "archive/boats/drift-boats-and-river/14-riverman/WillametteRiverStudy.pdf", "size_str": "312 KB", "size_kb": 312.2900390625}, {"filename": "ordprt_usa_rive.pdf", "rel_path": "archive/boats/drift-boats-and-river/14-riverman/ordprt_usa_rive.pdf", "size_str": "53 KB", "size_kb": 53.25390625}, {"filename": "ordprt_world_rive.pdf", "rel_path": "archive/boats/drift-boats-and-river/14-riverman/ordprt_world_rive.pdf", "size_str": "49 KB", "size_kb": 48.9423828125}]}, {"id": "14-rogue-river", "name": "Rogue River", "full_name": "14' Rogue River", "length_ft": 14, "length_str": "14'", "category_id": "drift-boats-and-river", "category_title": "Drift Boats & River", "category_icon": "\ud83c\udfa3", "description": "Rugged 14' Drift Boats & River design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/drift-boats-and-river/14-rogue-river", "study_plan": {"filename": "RogueStudy.pdf", "rel_path": "archive/boats/drift-boats-and-river/14-rogue-river/RogueStudy.pdf", "size_str": "724 KB", "size_kb": 724.056640625}, "metric_study_plan": null, "bom": null, "const_guide": {"filename": "r_RoguConst.pdf", "rel_path": "archive/boats/drift-boats-and-river/14-rogue-river/r_RoguConst.pdf", "size_str": "13.4 MB", "size_kb": 13706.369140625}, "files": [{"filename": "RogueStudy.pdf", "rel_path": "archive/boats/drift-boats-and-river/14-rogue-river/RogueStudy.pdf", "size_str": "724 KB", "size_kb": 724.056640625}, {"filename": "r_RoguConst.pdf", "rel_path": "archive/boats/drift-boats-and-river/14-rogue-river/r_RoguConst.pdf", "size_str": "13.4 MB", "size_kb": 13706.369140625}]}, {"id": "15-current-river", "name": "Current River", "full_name": "15' Current River", "length_ft": 15, "length_str": "15'", "category_id": "drift-boats-and-river", "category_title": "Drift Boats & River", "category_icon": "\ud83c\udfa3", "description": "Rugged 15' Drift Boats & River design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/drift-boats-and-river/15-current-river", "study_plan": {"filename": "CurrentRiverStudy.pdf", "rel_path": "archive/boats/drift-boats-and-river/15-current-river/CurrentRiverStudy.pdf", "size_str": "39 KB", "size_kb": 39.2138671875}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "CurrentRiverStudy.pdf", "rel_path": "archive/boats/drift-boats-and-river/15-current-river/CurrentRiverStudy.pdf", "size_str": "39 KB", "size_kb": 39.2138671875}]}, {"id": "16-mackenzie", "name": "Mackenzie", "full_name": "16' Mackenzie", "length_ft": 16, "length_str": "16'", "category_id": "drift-boats-and-river", "category_title": "Drift Boats & River", "category_icon": "\ud83c\udfa3", "description": "Rugged 16' Drift Boats & River design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/drift-boats-and-river/16-mackenzie", "study_plan": {"filename": "MackStudy.pdf", "rel_path": "archive/boats/drift-boats-and-river/16-mackenzie/MackStudy.pdf", "size_str": "120 KB", "size_kb": 120.0029296875}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "MackStudy.pdf", "rel_path": "archive/boats/drift-boats-and-river/16-mackenzie/MackStudy.pdf", "size_str": "120 KB", "size_kb": 120.0029296875}, {"filename": "MackinawStudy.pdf", "rel_path": "archive/boats/drift-boats-and-river/16-mackenzie/MackinawStudy.pdf", "size_str": "290 KB", "size_kb": 289.794921875}, {"filename": "ordprt_calif_mack.pdf", "rel_path": "archive/boats/drift-boats-and-river/16-mackenzie/ordprt_calif_mack.pdf", "size_str": "50 KB", "size_kb": 49.98828125}, {"filename": "ordprt_usa_mack.pdf", "rel_path": "archive/boats/drift-boats-and-river/16-mackenzie/ordprt_usa_mack.pdf", "size_str": "54 KB", "size_kb": 54.2392578125}, {"filename": "ordprt_world_mack.pdf", "rel_path": "archive/boats/drift-boats-and-river/16-mackenzie/ordprt_world_mack.pdf", "size_str": "50 KB", "size_kb": 49.91015625}]}, {"id": "16-ozark-fisherman", "name": "Ozark Fisherman", "full_name": "16' Ozark Fisherman", "length_ft": 16, "length_str": "16'", "category_id": "drift-boats-and-river", "category_title": "Drift Boats & River", "category_icon": "\ud83c\udfa3", "description": "Rugged 16' Drift Boats & River design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/drift-boats-and-river/16-ozark-fisherman", "study_plan": {"filename": "OzarStudy.pdf", "rel_path": "archive/boats/drift-boats-and-river/16-ozark-fisherman/OzarStudy.pdf", "size_str": "125 KB", "size_kb": 124.9248046875}, "metric_study_plan": {"filename": "OzarkFishermanMetricStudy.pdf", "rel_path": "archive/boats/drift-boats-and-river/16-ozark-fisherman/OzarkFishermanMetricStudy.pdf", "size_str": "312 KB", "size_kb": 312.03125}, "bom": null, "const_guide": {"filename": "r_OzarConst.pdf", "rel_path": "archive/boats/drift-boats-and-river/16-ozark-fisherman/r_OzarConst.pdf", "size_str": "433 KB", "size_kb": 433.3916015625}, "files": [{"filename": "OzarStudy.pdf", "rel_path": "archive/boats/drift-boats-and-river/16-ozark-fisherman/OzarStudy.pdf", "size_str": "125 KB", "size_kb": 124.9248046875}, {"filename": "OzarkFishermanMetricStudy.pdf", "rel_path": "archive/boats/drift-boats-and-river/16-ozark-fisherman/OzarkFishermanMetricStudy.pdf", "size_str": "312 KB", "size_kb": 312.03125}, {"filename": "OzarkFishermanStudy.pdf", "rel_path": "archive/boats/drift-boats-and-river/16-ozark-fisherman/OzarkFishermanStudy.pdf", "size_str": "341 KB", "size_kb": 341.4169921875}, {"filename": "ordprt_usa_ozar.pdf", "rel_path": "archive/boats/drift-boats-and-river/16-ozark-fisherman/ordprt_usa_ozar.pdf", "size_str": "53 KB", "size_kb": 53.39453125}, {"filename": "ordprt_world_ozar.pdf", "rel_path": "archive/boats/drift-boats-and-river/16-ozark-fisherman/ordprt_world_ozar.pdf", "size_str": "50 KB", "size_kb": 50.28125}, {"filename": "r_OzarConst.pdf", "rel_path": "archive/boats/drift-boats-and-river/16-ozark-fisherman/r_OzarConst.pdf", "size_str": "433 KB", "size_kb": 433.3916015625}]}, {"id": "17-clackamas", "name": "Clackamas", "full_name": "17' Clackamas", "length_ft": 17, "length_str": "17'", "category_id": "drift-boats-and-river", "category_title": "Drift Boats & River", "category_icon": "\ud83c\udfa3", "description": "Rugged 17' Drift Boats & River design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/drift-boats-and-river/17-clackamas", "study_plan": null, "metric_study_plan": null, "bom": null, "const_guide": null, "files": []}, {"id": "08-huntington-harbor", "name": "Huntington Harbor", "full_name": "8' Huntington Harbor", "length_ft": 8, "length_str": "8'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 8' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/08-huntington-harbor", "study_plan": null, "metric_study_plan": null, "bom": {"filename": "HuntingtonHarborBOM.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/08-huntington-harbor/HuntingtonHarborBOM.pdf", "size_str": "9 KB", "size_kb": 9.169921875}, "const_guide": null, "files": [{"filename": "HuntingtonHarborBOM.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/08-huntington-harbor/HuntingtonHarborBOM.pdf", "size_str": "9 KB", "size_kb": 9.169921875}, {"filename": "HuntingtonHarborMetricPlans.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/08-huntington-harbor/HuntingtonHarborMetricPlans.pdf", "size_str": "531 KB", "size_kb": 531.3955078125}]}, {"id": "10-bird-rock", "name": "Bird Rock", "full_name": "10' Bird Rock", "length_ft": 10, "length_str": "10'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 10' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/10-bird-rock", "study_plan": {"filename": "BirdRockStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/10-bird-rock/BirdRockStudy.pdf", "size_str": "68 KB", "size_kb": 67.650390625}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "BirdRockStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/10-bird-rock/BirdRockStudy.pdf", "size_str": "68 KB", "size_kb": 67.650390625}, {"filename": "RailBirdStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/10-bird-rock/RailBirdStudy.pdf", "size_str": "68 KB", "size_kb": 67.8203125}]}, {"id": "10-crawdad", "name": "Crawdad", "full_name": "10' Crawdad", "length_ft": 10, "length_str": "10'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 10' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/10-crawdad", "study_plan": {"filename": "CrawdadStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/10-crawdad/CrawdadStudy.pdf", "size_str": "212 KB", "size_kb": 212.3701171875}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "CrawdadStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/10-crawdad/CrawdadStudy.pdf", "size_str": "212 KB", "size_kb": 212.3701171875}]}, {"id": "10-newport-harbor", "name": "Newport Harbor", "full_name": "10' Newport Harbor", "length_ft": 10, "length_str": "10'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 10' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/10-newport-harbor", "study_plan": {"filename": "NewpStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/10-newport-harbor/NewpStudy.pdf", "size_str": "117 KB", "size_kb": 116.923828125}, "metric_study_plan": null, "bom": {"filename": "NewporterBOM.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/10-newport-harbor/NewporterBOM.pdf", "size_str": "9 KB", "size_kb": 9.029296875}, "const_guide": null, "files": [{"filename": "NewpStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/10-newport-harbor/NewpStudy.pdf", "size_str": "117 KB", "size_kb": 116.923828125}, {"filename": "NewporterBOM.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/10-newport-harbor/NewporterBOM.pdf", "size_str": "9 KB", "size_kb": 9.029296875}, {"filename": "NewporterStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/10-newport-harbor/NewporterStudy.pdf", "size_str": "208 KB", "size_kb": 207.564453125}, {"filename": "ordprt_usa_newp.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/10-newport-harbor/ordprt_usa_newp.pdf", "size_str": "53 KB", "size_kb": 52.8544921875}, {"filename": "ordprt_world_newp.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/10-newport-harbor/ordprt_world_newp.pdf", "size_str": "48 KB", "size_kb": 48.08984375}]}, {"id": "10-puchie-special", "name": "Puchie Special", "full_name": "10' Puchie Special", "length_ft": 10, "length_str": "10'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 10' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/10-puchie-special", "study_plan": {"filename": "PuchieSpecialStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/10-puchie-special/PuchieSpecialStudy.pdf", "size_str": "788 KB", "size_kb": 787.916015625}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "PuchieSpecialStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/10-puchie-special/PuchieSpecialStudy.pdf", "size_str": "788 KB", "size_kb": 787.916015625}]}, {"id": "11-otters-point", "name": "Otters Point", "full_name": "11' Otters Point", "length_ft": 11, "length_str": "11'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 11' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/11-otters-point", "study_plan": {"filename": "OttersPointStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/11-otters-point/OttersPointStudy.pdf", "size_str": "797 KB", "size_kb": 797.1494140625}, "metric_study_plan": {"filename": "OttersPointMetricStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/11-otters-point/OttersPointMetricStudy.pdf", "size_str": "628 KB", "size_kb": 628.3330078125}, "bom": null, "const_guide": null, "files": [{"filename": "OttersPointMetricStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/11-otters-point/OttersPointMetricStudy.pdf", "size_str": "628 KB", "size_kb": 628.3330078125}, {"filename": "OttersPointStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/11-otters-point/OttersPointStudy.pdf", "size_str": "797 KB", "size_kb": 797.1494140625}]}, {"id": "11-tanuki", "name": "Tanuki", "full_name": "11' Tanuki", "length_ft": 11, "length_str": "11'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 11' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/11-tanuki", "study_plan": {"filename": "TanukiStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/11-tanuki/TanukiStudy.pdf", "size_str": "761 KB", "size_kb": 761.15234375}, "metric_study_plan": {"filename": "TanukiMetricStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/11-tanuki/TanukiMetricStudy.pdf", "size_str": "69 KB", "size_kb": 68.9453125}, "bom": null, "const_guide": null, "files": [{"filename": "TanukiMetricStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/11-tanuki/TanukiMetricStudy.pdf", "size_str": "69 KB", "size_kb": 68.9453125}, {"filename": "TanukiStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/11-tanuki/TanukiStudy.pdf", "size_str": "761 KB", "size_kb": 761.15234375}]}, {"id": "12-boothbay", "name": "Boothbay", "full_name": "12' Boothbay", "length_ft": 12, "length_str": "12'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 12' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/12-boothbay", "study_plan": null, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "BoothBayMetricPlans.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/12-boothbay/BoothBayMetricPlans.pdf", "size_str": "1.3 MB", "size_kb": 1364.669921875}, {"filename": "BoothBayPlans.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/12-boothbay/BoothBayPlans.pdf", "size_str": "550 KB", "size_kb": 550.25}]}, {"id": "12-cape-cod", "name": "Cape Cod", "full_name": "12' Cape Cod", "length_ft": 12, "length_str": "12'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 12' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/12-cape-cod", "study_plan": null, "metric_study_plan": {"filename": "CapeCodMetricStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/12-cape-cod/CapeCodMetricStudy.pdf", "size_str": "484 KB", "size_kb": 484.3447265625}, "bom": null, "const_guide": null, "files": [{"filename": "CapeCodMetricStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/12-cape-cod/CapeCodMetricStudy.pdf", "size_str": "484 KB", "size_kb": 484.3447265625}]}, {"id": "12-channel-islands", "name": "Channel Islands", "full_name": "12' Channel Islands", "length_ft": 12, "length_str": "12'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 12' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/12-channel-islands", "study_plan": null, "metric_study_plan": null, "bom": null, "const_guide": null, "files": []}, {"id": "12-minuteman", "name": "Minuteman", "full_name": "12' Minuteman", "length_ft": 12, "length_str": "12'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 12' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/12-minuteman", "study_plan": {"filename": "LabradorAluminumStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/12-minuteman/LabradorAluminumStudy.pdf", "size_str": "527 KB", "size_kb": 526.6708984375}, "metric_study_plan": null, "bom": {"filename": "MinutemanBOM.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/12-minuteman/MinutemanBOM.pdf", "size_str": "47 KB", "size_kb": 47.3740234375}, "const_guide": null, "files": [{"filename": "LabradorAluminumStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/12-minuteman/LabradorAluminumStudy.pdf", "size_str": "527 KB", "size_kb": 526.6708984375}, {"filename": "MinuStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/12-minuteman/MinuStudy.pdf", "size_str": "72 KB", "size_kb": 72.375}, {"filename": "MinutemanBOM.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/12-minuteman/MinutemanBOM.pdf", "size_str": "47 KB", "size_kb": 47.3740234375}, {"filename": "MinutemanStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/12-minuteman/MinutemanStudy.pdf", "size_str": "218 KB", "size_kb": 217.578125}, {"filename": "ordprt_world_minu.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/12-minuteman/ordprt_world_minu.pdf", "size_str": "47 KB", "size_kb": 47.43359375}]}, {"id": "12-skeeter", "name": "Skeeter", "full_name": "12' Skeeter", "length_ft": 12, "length_str": "12'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 12' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/12-skeeter", "study_plan": {"filename": "SkeeterStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/12-skeeter/SkeeterStudy.pdf", "size_str": "829 KB", "size_kb": 828.958984375}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "SkeeterStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/12-skeeter/SkeeterStudy.pdf", "size_str": "829 KB", "size_kb": 828.958984375}]}, {"id": "12-walden", "name": "Walden", "full_name": "12' Walden", "length_ft": 12, "length_str": "12'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 12' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/12-walden", "study_plan": {"filename": "WaldenStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/12-walden/WaldenStudy.pdf", "size_str": "71 KB", "size_kb": 70.8759765625}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "WaldenStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/12-walden/WaldenStudy.pdf", "size_str": "71 KB", "size_kb": 70.8759765625}]}, {"id": "14-arrow-point", "name": "Arrow Point", "full_name": "14' Arrow Point", "length_ft": 14, "length_str": "14'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 14' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/14-arrow-point", "study_plan": {"filename": "ArrowPointStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-arrow-point/ArrowPointStudy.pdf", "size_str": "682 KB", "size_kb": 681.9599609375}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "ArrowPointStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-arrow-point/ArrowPointStudy.pdf", "size_str": "682 KB", "size_kb": 681.9599609375}, {"filename": "ordprt_usa_arro.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-arrow-point/ordprt_usa_arro.pdf", "size_str": "54 KB", "size_kb": 53.5859375}, {"filename": "ordprt_world_arro.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-arrow-point/ordprt_world_arro.pdf", "size_str": "49 KB", "size_kb": 48.9052734375}]}, {"id": "14-mission-bay", "name": "Mission Bay", "full_name": "14' Mission Bay", "length_ft": 14, "length_str": "14'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 14' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/14-mission-bay", "study_plan": {"filename": "MaxiMissStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-mission-bay/MaxiMissStudy.pdf", "size_str": "531 KB", "size_kb": 531.26171875}, "metric_study_plan": {"filename": "MissionBayMetricStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-mission-bay/MissionBayMetricStudy.pdf", "size_str": "203 KB", "size_kb": 203.09765625}, "bom": {"filename": "MissionBayMetricBOM.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-mission-bay/MissionBayMetricBOM.pdf", "size_str": "10 KB", "size_kb": 9.7939453125}, "const_guide": {"filename": "r_MissConst.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-mission-bay/r_MissConst.pdf", "size_str": "364 KB", "size_kb": 363.927734375}, "files": [{"filename": "MaxiMissStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-mission-bay/MaxiMissStudy.pdf", "size_str": "531 KB", "size_kb": 531.26171875}, {"filename": "MiniMissBOM.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-mission-bay/MiniMissBOM.pdf", "size_str": "9 KB", "size_kb": 9.4296875}, {"filename": "MiniMissStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-mission-bay/MiniMissStudy.pdf", "size_str": "190 KB", "size_kb": 189.5244140625}, {"filename": "MissStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-mission-bay/MissStudy.pdf", "size_str": "122 KB", "size_kb": 122.2158203125}, {"filename": "MissionBayBOM.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-mission-bay/MissionBayBOM.pdf", "size_str": "47 KB", "size_kb": 46.8984375}, {"filename": "MissionBayMetricBOM.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-mission-bay/MissionBayMetricBOM.pdf", "size_str": "10 KB", "size_kb": 9.7939453125}, {"filename": "MissionBayMetricStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-mission-bay/MissionBayMetricStudy.pdf", "size_str": "203 KB", "size_kb": 203.09765625}, {"filename": "ordprt_calif_miss.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-mission-bay/ordprt_calif_miss.pdf", "size_str": "49 KB", "size_kb": 48.9189453125}, {"filename": "ordprt_usa_miss.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-mission-bay/ordprt_usa_miss.pdf", "size_str": "52 KB", "size_kb": 52.10546875}, {"filename": "ordprt_world_miss.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-mission-bay/ordprt_world_miss.pdf", "size_str": "47 KB", "size_kb": 47.4296875}, {"filename": "r_MissConst.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-mission-bay/r_MissConst.pdf", "size_str": "364 KB", "size_kb": 363.927734375}]}, {"id": "14-scanoe", "name": "Scanoe", "full_name": "14' Scanoe", "length_ft": 14, "length_str": "14'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 14' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/14-scanoe", "study_plan": {"filename": "ScanoeStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-scanoe/ScanoeStudy.pdf", "size_str": "43 KB", "size_kb": 42.8955078125}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "ScanoeStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-scanoe/ScanoeStudy.pdf", "size_str": "43 KB", "size_kb": 42.8955078125}]}, {"id": "14-texan", "name": "Texan", "full_name": "14' Texan", "length_ft": 14, "length_str": "14'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 14' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/14-texan", "study_plan": {"filename": "TexaStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-texan/TexaStudy.pdf", "size_str": "79 KB", "size_kb": 79.451171875}, "metric_study_plan": null, "bom": {"filename": "TexanBOM.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-texan/TexanBOM.pdf", "size_str": "9 KB", "size_kb": 9.41015625}, "const_guide": null, "files": [{"filename": "TexaStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-texan/TexaStudy.pdf", "size_str": "79 KB", "size_kb": 79.451171875}, {"filename": "TexanBOM.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-texan/TexanBOM.pdf", "size_str": "9 KB", "size_kb": 9.41015625}, {"filename": "TexanStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/14-texan/TexanStudy.pdf", "size_str": "228 KB", "size_kb": 227.6435546875}]}, {"id": "15-chubasco", "name": "Chubasco", "full_name": "15' Chubasco", "length_ft": 15, "length_str": "15'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 15' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/15-chubasco", "study_plan": {"filename": "ChubStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/15-chubasco/ChubStudy.pdf", "size_str": "88 KB", "size_kb": 88.2548828125}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "ChubStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/15-chubasco/ChubStudy.pdf", "size_str": "88 KB", "size_kb": 88.2548828125}, {"filename": "ChubascoStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/15-chubasco/ChubascoStudy.pdf", "size_str": "284 KB", "size_kb": 283.9912109375}]}, {"id": "15-sabine", "name": "Sabine", "full_name": "15' Sabine", "length_ft": 15, "length_str": "15'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 15' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/15-sabine", "study_plan": {"filename": "SabineStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/15-sabine/SabineStudy.pdf", "size_str": "790 KB", "size_kb": 789.8994140625}, "metric_study_plan": {"filename": "SabineMetricStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/15-sabine/SabineMetricStudy.pdf", "size_str": "70 KB", "size_kb": 70.28125}, "bom": null, "const_guide": null, "files": [{"filename": "SabineMetricStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/15-sabine/SabineMetricStudy.pdf", "size_str": "70 KB", "size_kb": 70.28125}, {"filename": "SabineStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/15-sabine/SabineStudy.pdf", "size_str": "790 KB", "size_kb": 789.8994140625}]}, {"id": "16-back-bay", "name": "Back Bay", "full_name": "16' Back Bay", "length_ft": 16, "length_str": "16'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 16' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/16-back-bay", "study_plan": {"filename": "BackBayStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/16-back-bay/BackBayStudy.pdf", "size_str": "215 KB", "size_kb": 214.7578125}, "metric_study_plan": null, "bom": {"filename": "BackBayBOM.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/16-back-bay/BackBayBOM.pdf", "size_str": "46 KB", "size_kb": 46.14453125}, "const_guide": {"filename": "r_BackConst.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/16-back-bay/r_BackConst.pdf", "size_str": "1.1 MB", "size_kb": 1077.94140625}, "files": [{"filename": "BackBayBOM.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/16-back-bay/BackBayBOM.pdf", "size_str": "46 KB", "size_kb": 46.14453125}, {"filename": "BackBayStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/16-back-bay/BackBayStudy.pdf", "size_str": "215 KB", "size_kb": 214.7578125}, {"filename": "BackStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/16-back-bay/BackStudy.pdf", "size_str": "123 KB", "size_kb": 122.5625}, {"filename": "ordprt_calif_back.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/16-back-bay/ordprt_calif_back.pdf", "size_str": "49 KB", "size_kb": 49.123046875}, {"filename": "ordprt_usa_back.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/16-back-bay/ordprt_usa_back.pdf", "size_str": "52 KB", "size_kb": 52.39453125}, {"filename": "ordprt_world_back.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/16-back-bay/ordprt_world_back.pdf", "size_str": "48 KB", "size_kb": 47.734375}, {"filename": "r_BackConst.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/16-back-bay/r_BackConst.pdf", "size_str": "1.1 MB", "size_kb": 1077.94140625}]}, {"id": "16-bayou-jubilee", "name": "Bayou Jubilee", "full_name": "16' Bayou Jubilee", "length_ft": 16, "length_str": "16'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 16' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/16-bayou-jubilee", "study_plan": {"filename": "BayouJubileeStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/16-bayou-jubilee/BayouJubileeStudy.pdf", "size_str": "71 KB", "size_kb": 70.701171875}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "BayouJubileeStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/16-bayou-jubilee/BayouJubileeStudy.pdf", "size_str": "71 KB", "size_kb": 70.701171875}]}, {"id": "16-robalo", "name": "Robalo", "full_name": "16' Robalo", "length_ft": 16, "length_str": "16'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 16' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/16-robalo", "study_plan": {"filename": "RobaloStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/16-robalo/RobaloStudy.pdf", "size_str": "72 KB", "size_kb": 72.26171875}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "RobaloStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/16-robalo/RobaloStudy.pdf", "size_str": "72 KB", "size_kb": 72.26171875}]}, {"id": "16-san-clemente", "name": "San Clemente", "full_name": "16' San Clemente", "length_ft": 16, "length_str": "16'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 16' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/16-san-clemente", "study_plan": null, "metric_study_plan": {"filename": "ClementeMetricStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/16-san-clemente/ClementeMetricStudy.pdf", "size_str": "661 KB", "size_kb": 660.5927734375}, "bom": null, "const_guide": null, "files": [{"filename": "ClementeMetricStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/16-san-clemente/ClementeMetricStudy.pdf", "size_str": "661 KB", "size_kb": 660.5927734375}]}, {"id": "17-galveston", "name": "Galveston", "full_name": "17' Galveston", "length_ft": 17, "length_str": "17'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 17' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/17-galveston", "study_plan": {"filename": "GalvestonStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/17-galveston/GalvestonStudy.pdf", "size_str": "104 KB", "size_kb": 104.1923828125}, "metric_study_plan": {"filename": "GalvestonMetricStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/17-galveston/GalvestonMetricStudy.pdf", "size_str": "92 KB", "size_kb": 92.0869140625}, "bom": null, "const_guide": null, "files": [{"filename": "GalvestonMetricStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/17-galveston/GalvestonMetricStudy.pdf", "size_str": "92 KB", "size_kb": 92.0869140625}, {"filename": "GalvestonStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/17-galveston/GalvestonStudy.pdf", "size_str": "104 KB", "size_kb": 104.1923828125}]}, {"id": "18-baffin-bay", "name": "Baffin Bay", "full_name": "18' Baffin Bay", "length_ft": 18, "length_str": "18'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 18' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/18-baffin-bay", "study_plan": {"filename": "BaffinBayStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/18-baffin-bay/BaffinBayStudy.pdf", "size_str": "266 KB", "size_kb": 266.474609375}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "BaffinBayStudy.pdf", "rel_path": "archive/boats/garveys-skiffs-and-utility/18-baffin-bay/BaffinBayStudy.pdf", "size_str": "266 KB", "size_kb": 266.474609375}]}, {"id": "18-san-diego", "name": "San Diego", "full_name": "18' San Diego", "length_ft": 18, "length_str": "18'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 18' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/18-san-diego", "study_plan": null, "metric_study_plan": null, "bom": null, "const_guide": null, "files": []}, {"id": "20-san-pedro", "name": "San Pedro", "full_name": "20' San Pedro", "length_ft": 20, "length_str": "20'", "category_id": "garveys-skiffs-and-utility", "category_title": "Garveys & Skiffs", "category_icon": "\u26f5", "description": "Rugged 20' Garveys & Skiffs design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/garveys-skiffs-and-utility/20-san-pedro", "study_plan": null, "metric_study_plan": null, "bom": null, "const_guide": null, "files": []}, {"id": "15-seneca", "name": "Seneca", "full_name": "15' Seneca", "length_ft": 15, "length_str": "15'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 15' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/15-seneca", "study_plan": {"filename": "SenecaStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/15-seneca/SenecaStudy.pdf", "size_str": "721 KB", "size_kb": 721.2099609375}, "metric_study_plan": {"filename": "SenecaMetricStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/15-seneca/SenecaMetricStudy.pdf", "size_str": "515 KB", "size_kb": 514.65234375}, "bom": null, "const_guide": {"filename": "r_SeneConst.pdf", "rel_path": "archive/boats/pacific-power-dories/15-seneca/r_SeneConst.pdf", "size_str": "347 KB", "size_kb": 346.6708984375}, "files": [{"filename": "SenecaMetricStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/15-seneca/SenecaMetricStudy.pdf", "size_str": "515 KB", "size_kb": 514.65234375}, {"filename": "SenecaStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/15-seneca/SenecaStudy.pdf", "size_str": "721 KB", "size_kb": 721.2099609375}, {"filename": "r_SeneConst.pdf", "rel_path": "archive/boats/pacific-power-dories/15-seneca/r_SeneConst.pdf", "size_str": "347 KB", "size_kb": 346.6708984375}]}, {"id": "16-manzanillo", "name": "Manzanillo", "full_name": "16' Manzanillo", "length_ft": 16, "length_str": "16'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 16' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/16-manzanillo", "study_plan": {"filename": "ManzanilloStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/16-manzanillo/ManzanilloStudy.pdf", "size_str": "41 KB", "size_kb": 40.5498046875}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "ManzanilloStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/16-manzanillo/ManzanilloStudy.pdf", "size_str": "41 KB", "size_kb": 40.5498046875}]}, {"id": "17-courtenay", "name": "Courtenay", "full_name": "17' Courtenay", "length_ft": 17, "length_str": "17'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 17' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/17-courtenay", "study_plan": {"filename": "CourtenayStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/17-courtenay/CourtenayStudy.pdf", "size_str": "844 KB", "size_kb": 843.6953125}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "CourtenayStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/17-courtenay/CourtenayStudy.pdf", "size_str": "844 KB", "size_kb": 843.6953125}]}, {"id": "17-tillamook", "name": "Tillamook", "full_name": "17' Tillamook", "length_ft": 17, "length_str": "17'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 17' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/17-tillamook", "study_plan": {"filename": "TillStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/17-tillamook/TillStudy.pdf", "size_str": "94 KB", "size_kb": 93.87109375}, "metric_study_plan": null, "bom": null, "const_guide": {"filename": "r_TillConst.pdf", "rel_path": "archive/boats/pacific-power-dories/17-tillamook/r_TillConst.pdf", "size_str": "1024 KB", "size_kb": 1024.0}, "files": [{"filename": "TillStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/17-tillamook/TillStudy.pdf", "size_str": "94 KB", "size_kb": 93.87109375}, {"filename": "TillamookStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/17-tillamook/TillamookStudy.pdf", "size_str": "243 KB", "size_kb": 243.2607421875}, {"filename": "r_TillConst.pdf", "rel_path": "archive/boats/pacific-power-dories/17-tillamook/r_TillConst.pdf", "size_str": "1024 KB", "size_kb": 1024.0}]}, {"id": "18-ensenada", "name": "Ensenada", "full_name": "18' Ensenada", "length_ft": 18, "length_str": "18'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 18' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/18-ensenada", "study_plan": {"filename": "EnsenadaStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/18-ensenada/EnsenadaStudy.pdf", "size_str": "71 KB", "size_kb": 71.017578125}, "metric_study_plan": {"filename": "EnsenadaMetricStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/18-ensenada/EnsenadaMetricStudy.pdf", "size_str": "106 KB", "size_kb": 105.6904296875}, "bom": null, "const_guide": null, "files": [{"filename": "EnsenadaMetricStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/18-ensenada/EnsenadaMetricStudy.pdf", "size_str": "106 KB", "size_kb": 105.6904296875}, {"filename": "EnsenadaStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/18-ensenada/EnsenadaStudy.pdf", "size_str": "71 KB", "size_kb": 71.017578125}]}, {"id": "18-eureka", "name": "Eureka", "full_name": "18' Eureka", "length_ft": 18, "length_str": "18'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 18' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/18-eureka", "study_plan": {"filename": "EureStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/18-eureka/EureStudy.pdf", "size_str": "81 KB", "size_kb": 81.0703125}, "metric_study_plan": null, "bom": {"filename": "EurekaBOM.pdf", "rel_path": "archive/boats/pacific-power-dories/18-eureka/EurekaBOM.pdf", "size_str": "209 KB", "size_kb": 208.55859375}, "const_guide": null, "files": [{"filename": "EureStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/18-eureka/EureStudy.pdf", "size_str": "81 KB", "size_kb": 81.0703125}, {"filename": "EurekaBOM.pdf", "rel_path": "archive/boats/pacific-power-dories/18-eureka/EurekaBOM.pdf", "size_str": "209 KB", "size_kb": 208.55859375}, {"filename": "EurekaStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/18-eureka/EurekaStudy.pdf", "size_str": "280 KB", "size_kb": 279.759765625}]}, {"id": "19-albion", "name": "Albion", "full_name": "19' Albion", "length_ft": 19, "length_str": "19'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 19' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/19-albion", "study_plan": {"filename": "AlbionStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/19-albion/AlbionStudy.pdf", "size_str": "337 KB", "size_kb": 336.5751953125}, "metric_study_plan": {"filename": "AlbionMetricStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/19-albion/AlbionMetricStudy.pdf", "size_str": "306 KB", "size_kb": 305.5107421875}, "bom": null, "const_guide": null, "files": [{"filename": "AlbionMetricStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/19-albion/AlbionMetricStudy.pdf", "size_str": "306 KB", "size_kb": 305.5107421875}, {"filename": "AlbionStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/19-albion/AlbionStudy.pdf", "size_str": "337 KB", "size_kb": 336.5751953125}]}, {"id": "19-anacapa", "name": "Anacapa", "full_name": "19' Anacapa", "length_ft": 19, "length_str": "19'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 19' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/19-anacapa", "study_plan": {"filename": "AnacapaStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/19-anacapa/AnacapaStudy.pdf", "size_str": "453 KB", "size_kb": 453.2880859375}, "metric_study_plan": {"filename": "AnacapaMetricStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/19-anacapa/AnacapaMetricStudy.pdf", "size_str": "343 KB", "size_kb": 342.8564453125}, "bom": null, "const_guide": null, "files": [{"filename": "AnacapaMetricStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/19-anacapa/AnacapaMetricStudy.pdf", "size_str": "343 KB", "size_kb": 342.8564453125}, {"filename": "AnacapaStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/19-anacapa/AnacapaStudy.pdf", "size_str": "453 KB", "size_kb": 453.2880859375}]}, {"id": "19-san-diegan", "name": "San Diegan", "full_name": "19' San Diegan", "length_ft": 19, "length_str": "19'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 19' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/19-san-diegan", "study_plan": {"filename": "SanDieganStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/19-san-diegan/SanDieganStudy.pdf", "size_str": "207 KB", "size_kb": 206.5205078125}, "metric_study_plan": null, "bom": {"filename": "SanDieganBOM.pdf", "rel_path": "archive/boats/pacific-power-dories/19-san-diegan/SanDieganBOM.pdf", "size_str": "46 KB", "size_kb": 46.0439453125}, "const_guide": null, "files": [{"filename": "SanDieganBOM.pdf", "rel_path": "archive/boats/pacific-power-dories/19-san-diegan/SanDieganBOM.pdf", "size_str": "46 KB", "size_kb": 46.0439453125}, {"filename": "SanDieganStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/19-san-diegan/SanDieganStudy.pdf", "size_str": "207 KB", "size_kb": 206.5205078125}, {"filename": "SandStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/19-san-diegan/SandStudy.pdf", "size_str": "122 KB", "size_kb": 121.521484375}, {"filename": "ordprt_usa_sand.pdf", "rel_path": "archive/boats/pacific-power-dories/19-san-diegan/ordprt_usa_sand.pdf", "size_str": "52 KB", "size_kb": 51.7548828125}, {"filename": "ordprt_world_sand.pdf", "rel_path": "archive/boats/pacific-power-dories/19-san-diegan/ordprt_world_sand.pdf", "size_str": "47 KB", "size_kb": 46.95703125}]}, {"id": "20-avila", "name": "Avila", "full_name": "20' Avila", "length_ft": 20, "length_str": "20'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 20' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/20-avila", "study_plan": {"filename": "AvilaStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/20-avila/AvilaStudy.pdf", "size_str": "72 KB", "size_kb": 71.7373046875}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "AvilaStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/20-avila/AvilaStudy.pdf", "size_str": "72 KB", "size_kb": 71.7373046875}]}, {"id": "20-californian", "name": "Californian", "full_name": "20' Californian", "length_ft": 20, "length_str": "20'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 20' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/20-californian", "study_plan": {"filename": "CaliStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/20-californian/CaliStudy.pdf", "size_str": "119 KB", "size_kb": 119.3173828125}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "CaliStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/20-californian/CaliStudy.pdf", "size_str": "119 KB", "size_kb": 119.3173828125}, {"filename": "CalifornianStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/20-californian/CalifornianStudy.pdf", "size_str": "202 KB", "size_kb": 201.78515625}, {"filename": "ordprt_calif_arro.pdf", "rel_path": "archive/boats/pacific-power-dories/20-californian/ordprt_calif_arro.pdf", "size_str": "50 KB", "size_kb": 50.404296875}, {"filename": "ordprt_calif_baha.pdf", "rel_path": "archive/boats/pacific-power-dories/20-californian/ordprt_calif_baha.pdf", "size_str": "48 KB", "size_kb": 47.923828125}, {"filename": "ordprt_calif_cali.pdf", "rel_path": "archive/boats/pacific-power-dories/20-californian/ordprt_calif_cali.pdf", "size_str": "47 KB", "size_kb": 47.4130859375}, {"filename": "ordprt_calif_cana.pdf", "rel_path": "archive/boats/pacific-power-dories/20-californian/ordprt_calif_cana.pdf", "size_str": "48 KB", "size_kb": 47.806640625}, {"filename": "ordprt_calif_ches.pdf", "rel_path": "archive/boats/pacific-power-dories/20-californian/ordprt_calif_ches.pdf", "size_str": "49 KB", "size_kb": 48.8740234375}, {"filename": "ordprt_calif_gree.pdf", "rel_path": "archive/boats/pacific-power-dories/20-californian/ordprt_calif_gree.pdf", "size_str": "50 KB", "size_kb": 50.025390625}, {"filename": "ordprt_calif_mini.pdf", "rel_path": "archive/boats/pacific-power-dories/20-californian/ordprt_calif_mini.pdf", "size_str": "49 KB", "size_kb": 48.9736328125}, {"filename": "ordprt_calif_minu.pdf", "rel_path": "archive/boats/pacific-power-dories/20-californian/ordprt_calif_minu.pdf", "size_str": "49 KB", "size_kb": 48.9169921875}, {"filename": "ordprt_calif_newp.pdf", "rel_path": "archive/boats/pacific-power-dories/20-californian/ordprt_calif_newp.pdf", "size_str": "49 KB", "size_kb": 48.646484375}, {"filename": "ordprt_calif_ozar.pdf", "rel_path": "archive/boats/pacific-power-dories/20-californian/ordprt_calif_ozar.pdf", "size_str": "50 KB", "size_kb": 49.798828125}, {"filename": "ordprt_calif_pesc.pdf", "rel_path": "archive/boats/pacific-power-dories/20-californian/ordprt_calif_pesc.pdf", "size_str": "48 KB", "size_kb": 47.9052734375}, {"filename": "ordprt_calif_rive.pdf", "rel_path": "archive/boats/pacific-power-dories/20-californian/ordprt_calif_rive.pdf", "size_str": "49 KB", "size_kb": 48.9794921875}, {"filename": "ordprt_calif_scnnss.pdf", "rel_path": "archive/boats/pacific-power-dories/20-californian/ordprt_calif_scnnss.pdf", "size_str": "49 KB", "size_kb": 49.244140625}, {"filename": "ordprt_calif_sscn.pdf", "rel_path": "archive/boats/pacific-power-dories/20-californian/ordprt_calif_sscn.pdf", "size_str": "50 KB", "size_kb": 49.595703125}, {"filename": "ordprt_calif_swagsc.pdf", "rel_path": "archive/boats/pacific-power-dories/20-californian/ordprt_calif_swagsc.pdf", "size_str": "50 KB", "size_kb": 50.2333984375}, {"filename": "ordprt_calif_wandr.pdf", "rel_path": "archive/boats/pacific-power-dories/20-californian/ordprt_calif_wandr.pdf", "size_str": "49 KB", "size_kb": 49.2919921875}, {"filename": "ordprt_calif_yuko.pdf", "rel_path": "archive/boats/pacific-power-dories/20-californian/ordprt_calif_yuko.pdf", "size_str": "49 KB", "size_kb": 49.16796875}, {"filename": "ordprt_usa_cali.pdf", "rel_path": "archive/boats/pacific-power-dories/20-californian/ordprt_usa_cali.pdf", "size_str": "52 KB", "size_kb": 51.8720703125}, {"filename": "ordprt_world_cali.pdf", "rel_path": "archive/boats/pacific-power-dories/20-californian/ordprt_world_cali.pdf", "size_str": "47 KB", "size_kb": 47.091796875}]}, {"id": "20-pescadero", "name": "Pescadero", "full_name": "20' Pescadero", "length_ft": 20, "length_str": "20'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 20' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/20-pescadero", "study_plan": {"filename": "PescStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/20-pescadero/PescStudy.pdf", "size_str": "89 KB", "size_kb": 89.4794921875}, "metric_study_plan": {"filename": "PescaderoMetricStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/20-pescadero/PescaderoMetricStudy.pdf", "size_str": "749 KB", "size_kb": 749.458984375}, "bom": null, "const_guide": null, "files": [{"filename": "PescStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/20-pescadero/PescStudy.pdf", "size_str": "89 KB", "size_kb": 89.4794921875}, {"filename": "PescaderoMetricStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/20-pescadero/PescaderoMetricStudy.pdf", "size_str": "749 KB", "size_kb": 749.458984375}, {"filename": "PescaderoStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/20-pescadero/PescaderoStudy.pdf", "size_str": "1.1 MB", "size_kb": 1095.1357421875}, {"filename": "ordprt_usa_pesc.pdf", "rel_path": "archive/boats/pacific-power-dories/20-pescadero/ordprt_usa_pesc.pdf", "size_str": "52 KB", "size_kb": 51.92578125}, {"filename": "ordprt_world_pesc.pdf", "rel_path": "archive/boats/pacific-power-dories/20-pescadero/ordprt_world_pesc.pdf", "size_str": "47 KB", "size_kb": 47.1474609375}, {"filename": "ss_pescadero_08.jpg", "rel_path": "archive/boats/pacific-power-dories/20-pescadero/ss_pescadero_08.jpg", "size_str": "132 KB", "size_kb": 132.1884765625}]}, {"id": "20-puget-challenge", "name": "Puget Challenge", "full_name": "20' Puget Challenge", "length_ft": 20, "length_str": "20'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 20' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/20-puget-challenge", "study_plan": {"filename": "PugetChallengeStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/20-puget-challenge/PugetChallengeStudy.pdf", "size_str": "185 KB", "size_kb": 184.9814453125}, "metric_study_plan": {"filename": "PugetChallengeMetricStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/20-puget-challenge/PugetChallengeMetricStudy.pdf", "size_str": "36 KB", "size_kb": 36.2666015625}, "bom": null, "const_guide": null, "files": [{"filename": "PugetChallengeMetricStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/20-puget-challenge/PugetChallengeMetricStudy.pdf", "size_str": "36 KB", "size_kb": 36.2666015625}, {"filename": "PugetChallengeStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/20-puget-challenge/PugetChallengeStudy.pdf", "size_str": "185 KB", "size_kb": 184.9814453125}]}, {"id": "21-alamitos", "name": "Alamitos", "full_name": "21' Alamitos", "length_ft": 21, "length_str": "21'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 21' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/21-alamitos", "study_plan": {"filename": "AlamitosStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/21-alamitos/AlamitosStudy.pdf", "size_str": "226 KB", "size_kb": 226.091796875}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "AlamitosStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/21-alamitos/AlamitosStudy.pdf", "size_str": "226 KB", "size_kb": 226.091796875}]}, {"id": "22-fiesta-bay", "name": "Fiesta Bay", "full_name": "22' Fiesta Bay", "length_ft": 22, "length_str": "22'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 22' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/22-fiesta-bay", "study_plan": {"filename": "FiestaBayStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/22-fiesta-bay/FiestaBayStudy.pdf", "size_str": "290 KB", "size_kb": 289.8681640625}, "metric_study_plan": {"filename": "FiestaBayMetricStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/22-fiesta-bay/FiestaBayMetricStudy.pdf", "size_str": "677 KB", "size_kb": 676.681640625}, "bom": null, "const_guide": null, "files": [{"filename": "FiestaBayMetricStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/22-fiesta-bay/FiestaBayMetricStudy.pdf", "size_str": "677 KB", "size_kb": 676.681640625}, {"filename": "FiestaBayStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/22-fiesta-bay/FiestaBayStudy.pdf", "size_str": "290 KB", "size_kb": 289.8681640625}, {"filename": "NewfieStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/22-fiesta-bay/NewfieStudy.pdf", "size_str": "276 KB", "size_kb": 275.9501953125}]}, {"id": "22-la-paz", "name": "La Paz", "full_name": "22' La Paz", "length_ft": 22, "length_str": "22'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 22' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/22-la-paz", "study_plan": {"filename": "LaPazStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/22-la-paz/LaPazStudy.pdf", "size_str": "87 KB", "size_kb": 86.5927734375}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "LaPazStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/22-la-paz/LaPazStudy.pdf", "size_str": "87 KB", "size_kb": 86.5927734375}, {"filename": "LapaStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/22-la-paz/LapaStudy.pdf", "size_str": "31 KB", "size_kb": 31.40625}]}, {"id": "22-san-miguel", "name": "San Miguel", "full_name": "22' San Miguel", "length_ft": 22, "length_str": "22'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 22' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/22-san-miguel", "study_plan": {"filename": "SanMiguelStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/22-san-miguel/SanMiguelStudy.pdf", "size_str": "192 KB", "size_kb": 191.7333984375}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "SanMiguelStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/22-san-miguel/SanMiguelStudy.pdf", "size_str": "192 KB", "size_kb": 191.7333984375}]}, {"id": "23-farallon", "name": "Farallon", "full_name": "23' Farallon", "length_ft": 23, "length_str": "23'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 23' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/23-farallon", "study_plan": {"filename": "FarallonStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/23-farallon/FarallonStudy.pdf", "size_str": "751 KB", "size_kb": 751.041015625}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "FarallonStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/23-farallon/FarallonStudy.pdf", "size_str": "751 KB", "size_kb": 751.041015625}]}, {"id": "23-tortuga", "name": "Tortuga", "full_name": "23' Tortuga", "length_ft": 23, "length_str": "23'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 23' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/23-tortuga", "study_plan": {"filename": "TortStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/23-tortuga/TortStudy.pdf", "size_str": "79 KB", "size_kb": 79.232421875}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "TortStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/23-tortuga/TortStudy.pdf", "size_str": "79 KB", "size_kb": 79.232421875}, {"filename": "TortugaStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/23-tortuga/TortugaStudy.pdf", "size_str": "268 KB", "size_kb": 267.6328125}]}, {"id": "23-winchester", "name": "Winchester", "full_name": "23' Winchester", "length_ft": 23, "length_str": "23'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 23' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/23-winchester", "study_plan": {"filename": "WinchesterStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/23-winchester/WinchesterStudy.pdf", "size_str": "309 KB", "size_kb": 309.01953125}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "WinchesterStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/23-winchester/WinchesterStudy.pdf", "size_str": "309 KB", "size_kb": 309.01953125}]}, {"id": "24-san-juan", "name": "San Juan", "full_name": "24' San Juan", "length_ft": 24, "length_str": "24'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 24' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/24-san-juan", "study_plan": {"filename": "Study_SanJuan.pdf", "rel_path": "archive/boats/pacific-power-dories/24-san-juan/Study_SanJuan.pdf", "size_str": "80 KB", "size_kb": 80.1708984375}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "Study_SanJuan.pdf", "rel_path": "archive/boats/pacific-power-dories/24-san-juan/Study_SanJuan.pdf", "size_str": "80 KB", "size_kb": 80.1708984375}]}, {"id": "24-veracruz", "name": "Veracruz", "full_name": "24' Veracruz", "length_ft": 24, "length_str": "24'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 24' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/24-veracruz", "study_plan": {"filename": "VeracruzStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/24-veracruz/VeracruzStudy.pdf", "size_str": "1.0 MB", "size_kb": 1071.6689453125}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "VeracruzStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/24-veracruz/VeracruzStudy.pdf", "size_str": "1.0 MB", "size_kb": 1071.6689453125}]}, {"id": "24-yukon", "name": "Yukon", "full_name": "24' Yukon", "length_ft": 24, "length_str": "24'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 24' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/24-yukon", "study_plan": {"filename": "YukoStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/24-yukon/YukoStudy.pdf", "size_str": "123 KB", "size_kb": 123.13671875}, "metric_study_plan": {"filename": "YukonMetricStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/24-yukon/YukonMetricStudy.pdf", "size_str": "315 KB", "size_kb": 314.861328125}, "bom": {"filename": "YukonBOM.pdf", "rel_path": "archive/boats/pacific-power-dories/24-yukon/YukonBOM.pdf", "size_str": "45 KB", "size_kb": 45.3115234375}, "const_guide": null, "files": [{"filename": "YukoStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/24-yukon/YukoStudy.pdf", "size_str": "123 KB", "size_kb": 123.13671875}, {"filename": "YukonBOM.pdf", "rel_path": "archive/boats/pacific-power-dories/24-yukon/YukonBOM.pdf", "size_str": "45 KB", "size_kb": 45.3115234375}, {"filename": "YukonMetricStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/24-yukon/YukonMetricStudy.pdf", "size_str": "315 KB", "size_kb": 314.861328125}, {"filename": "YukonStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/24-yukon/YukonStudy.pdf", "size_str": "334 KB", "size_kb": 333.5576171875}, {"filename": "ordprt_usa_yuko.pdf", "rel_path": "archive/boats/pacific-power-dories/24-yukon/ordprt_usa_yuko.pdf", "size_str": "53 KB", "size_kb": 53.236328125}, {"filename": "ordprt_world_yuko.pdf", "rel_path": "archive/boats/pacific-power-dories/24-yukon/ordprt_world_yuko.pdf", "size_str": "50 KB", "size_kb": 49.7919921875}]}, {"id": "25-caladesi", "name": "Caladesi", "full_name": "25' Caladesi", "length_ft": 25, "length_str": "25'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 25' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/25-caladesi", "study_plan": {"filename": "CaladesiStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/25-caladesi/CaladesiStudy.pdf", "size_str": "261 KB", "size_kb": 260.5966796875}, "metric_study_plan": {"filename": "CaladesiMetricStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/25-caladesi/CaladesiMetricStudy.pdf", "size_str": "716 KB", "size_kb": 715.935546875}, "bom": {"filename": "CaladesiBOM.pdf", "rel_path": "archive/boats/pacific-power-dories/25-caladesi/CaladesiBOM.pdf", "size_str": "9 KB", "size_kb": 9.4873046875}, "const_guide": null, "files": [{"filename": "CaladesiBOM.pdf", "rel_path": "archive/boats/pacific-power-dories/25-caladesi/CaladesiBOM.pdf", "size_str": "9 KB", "size_kb": 9.4873046875}, {"filename": "CaladesiMetricStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/25-caladesi/CaladesiMetricStudy.pdf", "size_str": "716 KB", "size_kb": 715.935546875}, {"filename": "CaladesiStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/25-caladesi/CaladesiStudy.pdf", "size_str": "261 KB", "size_kb": 260.5966796875}]}, {"id": "26-tiburon", "name": "Tiburon", "full_name": "26' Tiburon", "length_ft": 26, "length_str": "26'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 26' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/26-tiburon", "study_plan": {"filename": "TiburonStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/26-tiburon/TiburonStudy.pdf", "size_str": "878 KB", "size_kb": 878.4443359375}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "TiburonStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/26-tiburon/TiburonStudy.pdf", "size_str": "878 KB", "size_kb": 878.4443359375}]}, {"id": "27-sitka", "name": "Sitka", "full_name": "27' Sitka", "length_ft": 27, "length_str": "27'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 27' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/27-sitka", "study_plan": {"filename": "SitkStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/27-sitka/SitkStudy.pdf", "size_str": "90 KB", "size_kb": 90.4560546875}, "metric_study_plan": {"filename": "SitkaMetricStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/27-sitka/SitkaMetricStudy.pdf", "size_str": "926 KB", "size_kb": 926.18359375}, "bom": null, "const_guide": null, "files": [{"filename": "SitkStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/27-sitka/SitkStudy.pdf", "size_str": "90 KB", "size_kb": 90.4560546875}, {"filename": "SitkaMetricStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/27-sitka/SitkaMetricStudy.pdf", "size_str": "926 KB", "size_kb": 926.18359375}, {"filename": "SitkaStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/27-sitka/SitkaStudy.pdf", "size_str": "259 KB", "size_kb": 259.458984375}]}, {"id": "32-kodiak", "name": "Kodiak", "full_name": "32' Kodiak", "length_ft": 32, "length_str": "32'", "category_id": "pacific-power-dories", "category_title": "Pacific Power Dories", "category_icon": "\ud83c\udf0a", "description": "Rugged 32' Pacific Power Dories design by Jeff Spira using standard ply-on-frame lumber and exterior/marine plywood.", "hull_type": "Ply-on-Frame", "folder": "archive/boats/pacific-power-dories/32-kodiak", "study_plan": {"filename": "KodiStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/32-kodiak/KodiStudy.pdf", "size_str": "89 KB", "size_kb": 89.4716796875}, "metric_study_plan": null, "bom": null, "const_guide": null, "files": [{"filename": "KodiStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/32-kodiak/KodiStudy.pdf", "size_str": "89 KB", "size_kb": 89.4716796875}, {"filename": "KodiakStudy.pdf", "rel_path": "archive/boats/pacific-power-dories/32-kodiak/KodiakStudy.pdf", "size_str": "265 KB", "size_kb": 264.9912109375}]}];
+        const REPORTS = [{"code": "BR-001", "filename": "BR-001 Registering.pdf", "title": "Registering Your Homebuilt Boat", "desc": "Legal, Coast Guard, and state registration procedures for amateur-built vessels.", "rel_path": "archive/technical-reports/BR-001 Registering.pdf", "size_str": "165 KB"}, {"code": "BR-001", "filename": "BR-001_Registering.pdf", "title": "Registering Your Homebuilt Boat", "desc": "Legal, Coast Guard, and state registration procedures for amateur-built vessels.", "rel_path": "archive/technical-reports/BR-001_Registering.pdf", "size_str": "329 KB"}, {"code": "BR-002", "filename": "BR-002 Outboard Power.pdf", "title": "Outboard Power for Homebuilt Boats", "desc": "Horsepower calculation formulas, transom loading, weight ratings, and fuel efficiency.", "rel_path": "archive/technical-reports/BR-002 Outboard Power.pdf", "size_str": "274 KB"}, {"code": "BR-002", "filename": "BR-002_Outboard_Power.pdf", "title": "Outboard Power for Homebuilt Boats", "desc": "Horsepower calculation formulas, transom loading, weight ratings, and fuel efficiency.", "rel_path": "archive/technical-reports/BR-002_Outboard_Power.pdf", "size_str": "87 KB"}, {"code": "BR-003", "filename": "BR-003_Seaworthiness.pdf", "title": "Homebuilt Boat Seaworthiness", "desc": "Hydrodynamic stability, reserve buoyancy in surf, and cockpit self-bailing design.", "rel_path": "archive/technical-reports/BR-003_Seaworthiness.pdf", "size_str": "309 KB"}, {"code": "BR-004", "filename": "BR-004_Scarfing.pdf", "title": "Scarfing Lumber for Boat Building", "desc": "Step-by-step techniques for 8:1 scarf beveling of long longitudinal framing stringers.", "rel_path": "archive/technical-reports/BR-004_Scarfing.pdf", "size_str": "969 KB"}, {"code": "BR-005", "filename": "BR-005_Steam Bending.pdf", "title": "Steam Bending Boat Framing", "desc": "Constructing steam boxes and bending hardwood framing without splitting.", "rel_path": "archive/technical-reports/BR-005_Steam Bending.pdf", "size_str": "305 KB"}, {"code": "BR-005", "filename": "BR-005_Steam_Bending.pdf", "title": "Steam Bending Boat Framing", "desc": "Constructing steam boxes and bending hardwood framing without splitting.", "rel_path": "archive/technical-reports/BR-005_Steam_Bending.pdf", "size_str": "434 KB"}, {"code": "BR-006", "filename": "BR-006_Scarfing Plywood.pdf", "title": "Scarfing Plywood Panels", "desc": "Methods for joining standard 4x8 plywood sheets into continuous seamless hull sides.", "rel_path": "archive/technical-reports/BR-006_Scarfing Plywood.pdf", "size_str": "435 KB"}, {"code": "BR-006", "filename": "BR-006_Scarfing_Plywood.pdf", "title": "Scarfing Plywood Panels", "desc": "Methods for joining standard 4x8 plywood sheets into continuous seamless hull sides.", "rel_path": "archive/technical-reports/BR-006_Scarfing_Plywood.pdf", "size_str": "623 KB"}, {"code": "Report", "filename": "Report_Bending_Longitudinal_Framing_Elements.pdf", "title": "Report Bending Longitudinal Framing Elements", "desc": "Engineering technical report by Jeff Spira.", "rel_path": "archive/technical-reports/Report_Bending_Longitudinal_Framing_Elements.pdf", "size_str": "185 KB"}, {"code": "Report", "filename": "Report_Homebuilt_Boat_Seaworthiness.pdf", "title": "Report Homebuilt Boat Seaworthiness", "desc": "Engineering technical report by Jeff Spira.", "rel_path": "archive/technical-reports/Report_Homebuilt_Boat_Seaworthiness.pdf", "size_str": "76 KB"}, {"code": "Report", "filename": "Report_Outboard_Power_for_Homebuilt_Boats.pdf", "title": "Report Outboard Power for Homebuilt Boats", "desc": "Engineering technical report by Jeff Spira.", "rel_path": "archive/technical-reports/Report_Outboard_Power_for_Homebuilt_Boats.pdf", "size_str": "87 KB"}, {"code": "Report", "filename": "Report_Registering_Your_Homebuilt_Boat.pdf", "title": "Report Registering Your Homebuilt Boat", "desc": "Engineering technical report by Jeff Spira.", "rel_path": "archive/technical-reports/Report_Registering_Your_Homebuilt_Boat.pdf", "size_str": "329 KB"}, {"code": "Report", "filename": "Report_Scarfing_Lumber_for_Boat_Building.pdf", "title": "Report Scarfing Lumber for Boat Building", "desc": "Engineering technical report by Jeff Spira.", "rel_path": "archive/technical-reports/Report_Scarfing_Lumber_for_Boat_Building.pdf", "size_str": "437 KB"}, {"code": "Report", "filename": "Report_Scarfing_Plywood.pdf", "title": "Report Scarfing Plywood", "desc": "Engineering technical report by Jeff Spira.", "rel_path": "archive/technical-reports/Report_Scarfing_Plywood.pdf", "size_str": "241 KB"}];
+        const MANUALS = [{"filename": "Boat_Horsepower_Calculation.pdf", "title": "Boat Horsepower Calculation", "rel_path": "archive/manuals-and-guides/Boat_Horsepower_Calculation.pdf", "size_str": "7 KB"}, {"filename": "How_To_Build_an_Easy_Home_Built_Sea_Kayak.pdf", "title": "How To Build An Easy Home Built Sea Kayak", "rel_path": "archive/manuals-and-guides/How_To_Build_an_Easy_Home_Built_Sea_Kayak.pdf", "size_str": "2.5 MB"}, {"filename": "PlyOnFrameManual.pdf", "title": "Plyonframemanual", "rel_path": "archive/manuals-and-guides/PlyOnFrameManual.pdf", "size_str": "1.4 MB"}, {"filename": "StitchAndGlueManual.pdf", "title": "Stitchandgluemanual", "rel_path": "archive/manuals-and-guides/StitchAndGlueManual.pdf", "size_str": "1.3 MB"}, {"filename": "USCG_aux_seamanship.pdf", "title": "Uscg Aux Seamanship", "rel_path": "archive/manuals-and-guides/USCG_aux_seamanship.pdf", "size_str": "5.8 MB"}, {"filename": "USCG_backyard_boatbuilders_safety.pdf", "title": "Uscg Backyard Boatbuilders Safety", "rel_path": "archive/manuals-and-guides/USCG_backyard_boatbuilders_safety.pdf", "size_str": "175 KB"}, {"filename": "USCG_rules_quick.pdf", "title": "Uscg Rules Quick", "rel_path": "archive/manuals-and-guides/USCG_rules_quick.pdf", "size_str": "478 KB"}, {"filename": "USCG_safety.pdf", "title": "Uscg Safety", "rel_path": "archive/manuals-and-guides/USCG_safety.pdf", "size_str": "2.8 MB"}, {"filename": "eBook_Fishing_Shooting_Sketches_GCleveland.pdf", "title": "Ebook Fishing Shooting Sketches Gcleveland", "rel_path": "archive/manuals-and-guides/eBook_Fishing_Shooting_Sketches_GCleveland.pdf", "size_str": "4.1 MB"}, {"filename": "eBook_Historic Waterways_RThwaites.pdf", "title": "Ebook Historic Waterways Rthwaites", "rel_path": "archive/manuals-and-guides/eBook_Historic Waterways_RThwaites.pdf", "size_str": "1.3 MB"}, {"filename": "eBook_Windjammers_Sea_Tramps_WRunciman.pdf", "title": "Ebook Windjammers Sea Tramps Wrunciman", "rel_path": "archive/manuals-and-guides/eBook_Windjammers_Sea_Tramps_WRunciman.pdf", "size_str": "1.4 MB"}, {"filename": "eb_PlyOnFrameManual.pdf", "title": "Eb Plyonframemanual", "rel_path": "archive/manuals-and-guides/eb_PlyOnFrameManual.pdf", "size_str": "4.3 MB"}, {"filename": "ebook_20000_leagues_jverne.pdf", "title": "20000 Leagues Jverne", "rel_path": "archive/manuals-and-guides/ebook_20000_leagues_jverne.pdf", "size_str": "1.6 MB"}, {"filename": "ebook_All_Afloat_WWood.pdf", "title": "All Afloat Wwood", "rel_path": "archive/manuals-and-guides/ebook_All_Afloat_WWood.pdf", "size_str": "1.7 MB"}, {"filename": "ebook_Captains_Courageous_RKipling.pdf", "title": "Captains Courageous Rkipling", "rel_path": "archive/manuals-and-guides/ebook_Captains_Courageous_RKipling.pdf", "size_str": "564 KB"}, {"filename": "ebook_Game_Birds_Game_Fishes_Pacific_Coast_HPayne.pdf", "title": "Game Birds Game Fishes Pacific Coast Hpayne", "rel_path": "archive/manuals-and-guides/ebook_Game_Birds_Game_Fishes_Pacific_Coast_HPayne.pdf", "size_str": "8.5 MB"}, {"filename": "ebook_How_Wooden_Ships_are_Built.pdf", "title": "How Wooden Ships Are Built", "rel_path": "archive/manuals-and-guides/ebook_How_Wooden_Ships_are_Built.pdf", "size_str": "15.1 MB"}, {"filename": "ebook_Robert Louis Stevenson - Kidnapped.pdf", "title": "Robert Louis Stevenson - Kidnapped", "rel_path": "archive/manuals-and-guides/ebook_Robert Louis Stevenson - Kidnapped.pdf", "size_str": "1.9 MB"}, {"filename": "ebook_Robert Louis Stevenson - Treasure Island.pdf", "title": "Robert Louis Stevenson - Treasure Island", "rel_path": "archive/manuals-and-guides/ebook_Robert Louis Stevenson - Treasure Island.pdf", "size_str": "911 KB"}, {"filename": "ebook_Wooden_Sailing_Ships_GHolmes.pdf", "title": "Wooden Sailing Ships Gholmes", "rel_path": "archive/manuals-and-guides/ebook_Wooden_Sailing_Ships_GHolmes.pdf", "size_str": "4.7 MB"}, {"filename": "ebook_boatbuilding_dbeard.pdf", "title": "Boatbuilding Dbeard", "rel_path": "archive/manuals-and-guides/ebook_boatbuilding_dbeard.pdf", "size_str": "12.6 MB"}, {"filename": "ebook_boating_dictionary_jpockel.pdf", "title": "Boating Dictionary Jpockel", "rel_path": "archive/manuals-and-guides/ebook_boating_dictionary_jpockel.pdf", "size_str": "380 KB"}, {"filename": "ebook_columbus_new_world_discovery_fyoung.pdf", "title": "Columbus New World Discovery Fyoung", "rel_path": "archive/manuals-and-guides/ebook_columbus_new_world_discovery_fyoung.pdf", "size_str": "4.6 MB"}, {"filename": "ebook_moby_dick_hmelville.pdf", "title": "Moby Dick Hmelville", "rel_path": "archive/manuals-and-guides/ebook_moby_dick_hmelville.pdf", "size_str": "2.1 MB"}, {"filename": "ebook_practical_boat_sailing_dfrazar.pdf", "title": "Practical Boat Sailing Dfrazar", "rel_path": "archive/manuals-and-guides/ebook_practical_boat_sailing_dfrazar.pdf", "size_str": "1.6 MB"}, {"filename": "ebook_sailing_alone_jslocum.pdf", "title": "Sailing Alone Jslocum", "rel_path": "archive/manuals-and-guides/ebook_sailing_alone_jslocum.pdf", "size_str": "4.2 MB"}, {"filename": "ebook_sea_wolf_jlondon.pdf", "title": "Sea Wolf Jlondon", "rel_path": "archive/manuals-and-guides/ebook_sea_wolf_jlondon.pdf", "size_str": "1022 KB"}, {"filename": "ebook_tales_of_fishes_zgrey.pdf", "title": "Tales Of Fishes Zgrey", "rel_path": "archive/manuals-and-guides/ebook_tales_of_fishes_zgrey.pdf", "size_str": "3.0 MB"}, {"filename": "ebook_the_sailing_boat_hfolkard.pdf", "title": "The Sailing Boat Hfolkard", "rel_path": "archive/manuals-and-guides/ebook_the_sailing_boat_hfolkard.pdf", "size_str": "8.7 MB"}, {"filename": "ebook_thousand_miles_jmacgregor.pdf", "title": "Thousand Miles Jmacgregor", "rel_path": "archive/manuals-and-guides/ebook_thousand_miles_jmacgregor.pdf", "size_str": "3.4 MB"}, {"filename": "ebook_two_years_before_rdana.pdf", "title": "Two Years Before Rdana", "rel_path": "archive/manuals-and-guides/ebook_two_years_before_rdana.pdf", "size_str": "1.2 MB"}, {"filename": "g_strikearc.pdf", "title": "G Strikearc", "rel_path": "archive/manuals-and-guides/g_strikearc.pdf", "size_str": "35 KB"}, {"filename": "r_boatebook.pdf", "title": "R Boat", "rel_path": "archive/manuals-and-guides/r_boatebook.pdf", "size_str": "1.4 MB"}, {"filename": "r_smokeebook.pdf", "title": "R Smoke", "rel_path": "archive/manuals-and-guides/r_smokeebook.pdf", "size_str": "529 KB"}];
+
+        let currentCategory = 'all';
 
         function renderBoats(items) {
-            grid.innerHTML = items.map(b => `
-                <div class="card">
-                    <div class="badge">${b.category}</div>
-                    <h3>${b.name}</h3>
-                    <ul class="specs-list">
-                        <li><strong>LOA:</strong> ${b.loa}</li>
-                        <li><strong>Beam:</strong> ${b.beam}</li>
-                        <li><strong>Hull:</strong> ${b.hull}</li>
-                        <li><strong>Power:</strong> ${b.power}</li>
-                        <li><strong>Payload:</strong> ${b.payload}</li>
-                    </ul>
-                    <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">
-                        📁 ${b.files.length} plan/document file(s) cataloged
+            const grid = document.getElementById('boatsGrid');
+            if (!items.length) {
+                grid.innerHTML = '<div class="empty-state"><h3>No boat models matched your search.</h3><p>Try searching for a different name or clear the search filter.</p></div>';
+                document.getElementById('resultsCount').innerText = '0 designs';
+                return;
+            }
+            document.getElementById('resultsCount').innerText = `Showing ${items.length} design${items.length === 1 ? '' : 's'}`;
+            
+            grid.innerHTML = items.map(b => {
+                let dlButtons = [];
+                if (b.study_plan) {
+                    dlButtons.push(`<a href="../${b.study_plan.rel_path}" download class="btn-dl primary-dl" title="Download Study Plan">📥 Study Plan</a>`);
+                }
+                if (b.metric_study_plan) {
+                    dlButtons.push(`<a href="../${b.metric_study_plan.rel_path}" download class="btn-dl" title="Download Metric Study Plan">📐 Metric Plan</a>`);
+                }
+                if (b.bom) {
+                    dlButtons.push(`<a href="../${b.bom.rel_path}" download class="btn-dl" title="Download Bill of Materials">📋 BOM</a>`);
+                }
+                if (b.const_guide) {
+                    dlButtons.push(`<a href="../${b.const_guide.rel_path}" download class="btn-dl" title="Download Construction Guide">🔨 Guide</a>`);
+                }
+
+                return `
+                <div class="boat-card">
+                    <div class="card-top">
+                        <div>
+                            <div class="badge-category">${b.category_title}</div>
+                            <h3 class="boat-title" style="margin-top: 0.35rem;">${b.full_name}</h3>
+                        </div>
+                        ${b.length_str ? `<span class="badge-length">${b.length_str}</span>` : ''}
+                    </div>
+                    
+                    <p class="boat-desc">${b.description}</p>
+
+                    <div class="downloads-box">
+                        <div class="downloads-label">Available Plans & Takeoffs (${b.files.length} files)</div>
+                        <div class="btn-group">
+                            ${dlButtons.length ? dlButtons.join('') : '<span style="color: var(--text-dim); font-size: 0.8rem;">Study plans in main collection</span>'}
+                        </div>
+                        <button class="btn-all-files" onclick='openModal("${b.id}")'>📂 View All Specs & Files (${b.files.length})</button>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function renderReports() {
+            const grid = document.getElementById('reportsGrid');
+            grid.innerHTML = REPORTS.map(r => `
+                <div class="doc-card">
+                    <div>
+                        <div class="doc-code">${r.code}</div>
+                        <h3 class="doc-title">${r.title}</h3>
+                        <p class="doc-desc" style="margin-top: 0.35rem;">${r.desc}</p>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+                        <span style="color: var(--text-dim); font-size: 0.8rem;">${r.size_str}</span>
+                        <a href="../${r.rel_path}" download class="btn-dl primary-dl">📥 Download PDF</a>
                     </div>
                 </div>
             `).join('');
         }
 
-        function filterCards() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = boats.filter(b => 
-                b.name.toLowerCase().includes(query) || 
-                b.category.toLowerCase().includes(query) ||
-                b.hull.toLowerCase().includes(query)
-            );
+        function renderManuals() {
+            const grid = document.getElementById('manualsGrid');
+            grid.innerHTML = MANUALS.map(m => `
+                <div class="doc-card">
+                    <div>
+                        <div class="doc-code">📘 Manual / Book</div>
+                        <h3 class="doc-title">${m.title}</h3>
+                        <p class="doc-desc" style="margin-top: 0.35rem;">${m.filename}</p>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+                        <span style="color: var(--text-dim); font-size: 0.8rem;">${m.size_str}</span>
+                        <a href="../${m.rel_path}" download class="btn-dl primary-dl">📥 Download PDF</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function switchTab(catId) {
+            currentCategory = catId;
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-cat') === catId);
+            });
+            
+            const boatsSec = document.getElementById('boatsSection');
+            const reportsSec = document.getElementById('reportsSection');
+            const manualsSec = document.getElementById('manualsSection');
+
+            if (catId === 'reports') {
+                boatsSec.style.display = 'none';
+                reportsSec.style.display = 'block';
+                manualsSec.style.display = 'none';
+                reportsSec.scrollIntoView({ behavior: 'smooth' });
+            } else if (catId === 'manuals') {
+                boatsSec.style.display = 'none';
+                reportsSec.style.display = 'none';
+                manualsSec.style.display = 'block';
+                manualsSec.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                boatsSec.style.display = 'block';
+                reportsSec.style.display = 'block';
+                manualsSec.style.display = 'block';
+                applyFilters();
+            }
+        }
+
+        function applyFilters() {
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            let filtered = BOATS;
+
+            if (currentCategory !== 'all' && currentCategory !== 'reports' && currentCategory !== 'manuals') {
+                filtered = filtered.filter(b => b.category_id === currentCategory);
+            }
+
+            if (query) {
+                filtered = filtered.filter(b => 
+                    b.name.toLowerCase().includes(query) ||
+                    b.full_name.toLowerCase().includes(query) ||
+                    b.category_title.toLowerCase().includes(query) ||
+                    b.description.toLowerCase().includes(query) ||
+                    b.length_str.toLowerCase().includes(query)
+                );
+            }
+
             renderBoats(filtered);
         }
 
-        renderBoats(boats);
+        function openModal(boatId) {
+            const boat = BOATS.find(b => b.id === boatId);
+            if (!boat) return;
+
+            document.getElementById('modalTitle').innerText = boat.full_name;
+            document.getElementById('modalCategory').innerText = boat.category_title;
+            document.getElementById('modalDesc').innerText = boat.description;
+
+            const list = document.getElementById('modalFileList');
+            if (!boat.files.length) {
+                list.innerHTML = '<li style="color: var(--text-dim); padding: 1rem 0;">No individual loose files attached. Referenced in core study sheets.</li>';
+            } else {
+                list.innerHTML = boat.files.map(f => `
+                    <li class="modal-file-item">
+                        <div>
+                            <strong>${f.filename}</strong>
+                            <span style="color: var(--text-dim); font-size: 0.75rem; margin-left: 0.5rem;">(${f.size_str})</span>
+                        </div>
+                        <a href="../${f.rel_path}" download class="btn-dl primary-dl">📥 Download</a>
+                    </li>
+                `).join('');
+            }
+
+            document.getElementById('modalBackdrop').classList.add('active');
+        }
+
+        function closeModal(e) {
+            document.getElementById('modalBackdrop').classList.remove('active');
+        }
+
+        // Initialize
+        renderBoats(BOATS);
+        renderReports();
+        renderManuals();
     </script>
 </body>
 </html>
